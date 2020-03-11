@@ -19,8 +19,8 @@ public class GenEntityTableUtil {
     private static final String driver="com.mysql.jdbc.Driver";
     private static final String pwd="TestBicon@123";
     private static final String user="root";
-    private static final String url = "jdbc:mysql://47.101.145.236:3306/mpsdev" + "?user=" + user + "&password=" + pwd + "&useUnicode=true&characterEncoding=UTF-8";
-    private static String tablename = "system_user_info";// 表名
+    private static final String url = "jdbc:mysql://47.101.145.236:3306/store" + "?user=" + user + "&password=" + pwd + "&useUnicode=true&characterEncoding=UTF-8";
+    private static String tablename = "system_user";// 表名
 
     private static String setpackage="com.rich.pojo";//你的实体类所在的包的位置
 
@@ -63,10 +63,10 @@ public class GenEntityTableUtil {
                     System.out.println();
                     while(rs1.next()){
                         System.out.println("private " +sqlType2JavaType(rs1.getString("TYPE_NAME"))+"	"+rs1.getString("COLUMN_NAME")+";");
-                        if (directory.exists()) {
-                        } else {
-                            directory.createNewFile();
-                        }
+//                        if (directory.exists()) {
+//                        } else {
+//                            directory.createNewFile();
+//                        }
                         String type = sqlType2JavaType(rs1.getString("TYPE_NAME"));
                         String name = rs1.getString("COLUMN_NAME");
                         String remark = rs1.getString("REMARKS");
@@ -79,7 +79,7 @@ public class GenEntityTableUtil {
 //                        String type = rs2.getString("TYPE_NAME");
 //                        createMethod(pw,type,name);
 //                    }
-//                    pw.write("}\r\n");
+                    pw.write("}\r\n");
 
                     pw.flush();
                     pw.close();
@@ -112,7 +112,7 @@ public class GenEntityTableUtil {
         }else{
             pw.write("\t//"+name+"\r\n");
         }
-        pw.write("\tprivate " +sqlType2JavaType(type)+"	"+name+";\r\n");
+        pw.write("\tprivate " +type+"	"+name+";\r\n");
     }
 
 //    /**生成方法*/
