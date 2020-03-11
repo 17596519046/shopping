@@ -42,7 +42,7 @@ public class GenEntityTableUtil {
                     //ResultSet rs =getConnection.getMetaData().getColumns(null, getXMLConfig.getSchema(),tableName.toUpperCase(), "%");
                     ResultSet rs1 = dbmd.getColumns(null, "%", tableName, "%");
                     ResultSet rs2 = dbmd.getColumns(null, "%", tableName, "%");
-                    File directory = new File(path+"\\"+ initcap(tablename)+".java");
+                    File directory = new File(path+"\\"+ camelName(tablename)+".java");
                     FileWriter fw = new FileWriter(directory);
                     PrintWriter pw = new PrintWriter(fw);
                     if(setpackage==null || setpackage==""){
@@ -57,7 +57,7 @@ public class GenEntityTableUtil {
                     pw.write("   */ \r\n");
                     //Get和Set标签
                     pw.write("@Data");
-                    pw.write("\r\npublic class " + initcap(tablename) + "{\r\n");
+                    pw.write("\r\npublic class " + camelName(tablename) + "{\r\n");
                     System.out.println();
                     System.out.println(tablename+"表信息：");
                     System.out.println();
@@ -138,15 +138,6 @@ public class GenEntityTableUtil {
         return getConnection;
     }
 
-    // 将单词字母首字母改为大写
-    private static String initcap(String str) {
-        char[] ch = str.toCharArray();
-        if (ch[0] >= 'a' && ch[0] <= 'z') {
-            ch[0] = (char) (ch[0] - 32);
-        }
-        return new String(ch);
-    }
-
     /**
      * 判断属性类型
       * @param sqlType
@@ -191,4 +182,29 @@ public class GenEntityTableUtil {
         time = sdf.format(new Date());
         return time;
     }
+
+    /**
+     * 将下划线大写方式命名的字符串转换为驼峰式。如果转换前的下划线大写方式命名的字符串为空，则返回空字符串。</br>
+     * 例如：HELLO_WORLD->HelloWorld
+     * @param name 转换前的下划线大写方式命名的字符串
+     * @return 转换后的驼峰式命名的字符串
+     */
+    public static String camelName(String name) {
+        StringBuilder result = new StringBuilder();
+        // 用下划线将原始字符串分割
+        String camels[] = name.split("_");
+        for (String camel :  camels) {
+            // 跳过原始字符串中开头、结尾的下换线或双重下划线
+            if (camel.isEmpty()) {
+                continue;
+            }
+            result.append(camel.substring(0, 1).toUpperCase());
+            result.append(camel.substring(1).toLowerCase());
+
+        }
+
+        return result.toString();
+    }
+
+
 }
