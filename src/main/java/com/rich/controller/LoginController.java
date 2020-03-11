@@ -18,7 +18,7 @@ public class LoginController {
     public String selectAll(Model model) {
         List<User> list = loginService.selectAll();
         model.addAttribute("list",list);
-        return "index";
+        return "pages/before/main";
     }
 
 }
