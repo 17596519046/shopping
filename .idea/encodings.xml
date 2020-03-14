@@ -2,5 +2,13 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/rich/pojo/BuyCar.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/rich/pojo/Goods.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/rich/pojo/SystemUser.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/rich/pojo/System_user.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/rich/pojo/System_user.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/webapp/img/image/1.ico" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/webapp/img/image/fav.jpg" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/webapp/img/image/yu.jpg" charset="GBK" />
   </component>
 </project>

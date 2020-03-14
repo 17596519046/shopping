@@ -2,8 +2,44 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.rich.mapper.LoginMapper">
 
-
-    <select id="selectAll" resultType="com.rich.pojo.User">
-        select * from user
+    <select id="selectUserInfo" resultType="int">
+        select count(*) from system_user
+        where user_name = #{userName}
+        <if test="phone != null and phone != ''">
+            and phone = #{phone}
+        </if>
     </select>
+
+    <select id="selectInfo" resultType="com.rich.pojo.SystemUser">
+        select * from system_user
+        where user_name = #{userName}
+    </select>
+
+    <insert id="insertInfo">
+        INSERT INTO system_user
+         (user_name,password,phone,email,create_time,update_time,role_id) VALUES
+         (#{userName} ,#{password} ,#{phone} ,#{email} ,#{createTime} ,#{updateTime} ,#{roleId} )
+    </insert>
+
+    <update id="updatePasswordInfo">
+        UPDATE system_user set password = #{password}
+        where user_name = #{userName} and phone = #{phone}
+    </update>
+
+    <select id="selectAllGoodsInfo" resultType="com.rich.pojo.Goods">
+        select * from goods
+    </select>
+
+    <insert id="insertBuyCar">
+        insert into buy_car
+        (num, goods_id, user_id, create_time, update_time)
+        VALUES
+        (#{num} ,#{goodsId} ,#{userId} ,#{createTime} ,#{updateTime} )
+    </insert>
+
+    <select id="selectBuyCarInfo" resultType="com.rich.vo.BuyCarInfo">
+        select g.name goodsName,g.img img,g.price price,b.num num from buy_car b
+        left join goods g on g.id =b.goods_id where b.user_id = #{userId}
+    </select>
+
 </mapper>

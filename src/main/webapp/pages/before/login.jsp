@@ -64,6 +64,7 @@
                     <div class="mt tab-h">
                     </div>
                     <div class="msg-wrap">
+                        <i id="msg"></i>
                         <div class="msg-error hide"><b></b></div>
                     </div>
                     <div class="mc">
@@ -89,7 +90,7 @@
                                     <input id="loginname" type="text" class="itxt" name="loginname" tabindex="1"
                                            autocomplete="off"
                                            value=""
-                                           placeholder="邮箱/用户名/登录手机"/>
+                                           placeholder="用户名"/>
                                     <span onclick="loginNameClear()" class="clear-btn" style="display: inline;"></span>
                                 </div>
 
@@ -119,7 +120,7 @@
                                     <div class="safe">
                                         <span></span>
                                         <span class="forget-pw-safe">
-											<a href="//passport.jd.com/uc/links?tag=safe" class="" target="_blank"
+											<a href="/pages/before/queryPassword.jsp" class="" target="_blank"
                                                clstag="pageclick|keycount|login_pc_201804112|6">忘记密码</a>
 										</span>
                                     </div>
@@ -127,7 +128,7 @@
 
                                 <div class="item item-fore5">
                                     <div class="login-btn">
-                                        <a href="javascript:;" onclick="beforeLogin()" class="btn-img btn-entry" id="loginsubmit" tabindex="6"
+                                        <a onclick="beforeLogin()" class="btn-img btn-entry" id="loginsubmit" tabindex="6"
                                            clstag="pageclick|keycount|login_pc_201804112|12">登&nbsp;&nbsp;&nbsp;&nbsp;录</a>
                                     </div>
                                 </div>
@@ -190,7 +191,7 @@
                         <li class="extra-r">
                             <div>
                                 <div class="regist-link"><a
-                                        href="register.jsp"
+                                        href="/pages/before/register.jsp"
                                         clstag="pageclick|keycount|login_pc_201804112|5"
                                         target="_blank"><b></b>立即注册</a></div>
                             </div>
@@ -264,8 +265,16 @@
 </body>
 <script>
     function beforeLogin() {
-        alert($("#loginname").val());
-        alert($("#nloginpwd").val());
+        var loginName = $("#loginname").val();
+        var password  =  $("#nloginpwd").val();
+        $.post("/before/login",{"userName":loginName,"password":password},function (data) {
+            var obj = JSON.parse(data);
+            if(obj.flag == 1){
+                $("#msg").html(obj.msg).css({"color": "red","font-size":"15px"});
+            }else {
+                window.location.href = "/pages/before/main.jsp"
+            }
+        })
     }
     function loginNameClear(){
         $("#loginname").val('')

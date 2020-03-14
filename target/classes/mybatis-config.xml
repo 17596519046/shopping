@@ -35,5 +35,6 @@
         <!-- 让控制台打印sql语句，注释掉则没有 -->
         <setting name="logImpl" value="STDOUT_LOGGING" />
         <setting name="callSettersOnNulls" value="true" />
+        <setting name="mapUnderscoreToCamelCase" value="true" />
     </settings>
 </configuration>
