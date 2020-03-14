@@ -15,10 +15,15 @@
     </select>
 
     <insert id="saveSystemUser">
-        inner into system_user (user_name,password,email,phone,role_id) values (#{userName},#{password},#{email},#{phone},#{roleId})
+        insert into system_user (user_name,password,email,phone,role_id,create_time,update_time,status)
+        values (#{userName},#{password},#{email},#{phone},#{roleId},#{createTime},#{updateTime},#{status})
     </insert>
 
     <update id="updateSystemUser">
         update system_user set user_name=#{userName},password=#{password},email=#{email},phone=#{phone},role_id=#{roleId} where id = #{id}
     </update>
+
+    <select id="selectSystemUserList" resultType="com.rich.pojo.SystemUser">
+        select * from system_user
+    </select>
 </mapper>

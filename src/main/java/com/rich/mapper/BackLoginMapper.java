@@ -27,10 +27,17 @@ public interface BackLoginMapper {
      * @return
      */
     boolean saveSystemUser(SystemUser systemUser);
+
     /**
      * 修改后台用户信息
      * @param systemUser
      * @return
      */
     boolean updateSystemUser(SystemUser systemUser);
+
+    /**
+     * 查询所有用户信息
+     * @return
+     */
+    List<SystemUser> selectSystemUserList();
 }

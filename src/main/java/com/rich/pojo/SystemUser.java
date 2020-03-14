@@ -1,5 +1,6 @@
 package com.rich.pojo;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.util.Date;
 
@@ -8,6 +9,7 @@ import java.util.Date;
     * 2020-03-11 12:30:40
    */ 
 @Data
+@Accessors(chain = true)
 public class SystemUser {
 	/**
 	*主键id

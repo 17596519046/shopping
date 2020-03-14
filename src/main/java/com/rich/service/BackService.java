@@ -32,4 +32,10 @@ public interface BackService {
      * @return
      */
     boolean updateSystemUser(SystemUser systemUser);
+
+    /**
+     * 查询所有用户信息
+     * @return
+     */
+    List<SystemUser> selectSystemUserList();
 }

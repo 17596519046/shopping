@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -74,7 +75,7 @@ public class BackServiceImpl implements BackService {
      */
     @Override
     public boolean saveSystemUser(SystemUser systemUser) {
-        return false;
+        return backLoginMapper.saveSystemUser(systemUser.setCreateTime(new Date()).setUpdateTime(new Date()).setStatus(1));
     }
 
     /**
@@ -84,6 +85,17 @@ public class BackServiceImpl implements BackService {
      */
     @Override
     public boolean updateSystemUser(SystemUser systemUser) {
-        return false;
+        return backLoginMapper.updateSystemUser(systemUser.setUpdateTime(new Date()));
     }
+
+    /**
+     * 查询所有用户信息
+     * @return
+     */
+    @Override
+    public List<SystemUser> selectSystemUserList() {
+        return backLoginMapper.selectSystemUserList();
+    }
+
+
 }

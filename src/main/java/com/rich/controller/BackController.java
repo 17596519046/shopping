@@ -53,4 +53,54 @@ public class BackController {
         return "pages/back/menu";
     }
 
+    /**
+     * 添加后台用户信息
+     * @return
+     */
+    @RequestMapping("saveSystemUser")
+    @ResponseBody
+    public Map saveSystemUser(@RequestBody SystemUser systemUser) {
+        boolean b = backService.saveSystemUser(systemUser);
+        HashMap map = new HashMap();
+        if (b){
+            map.put("flag", 1);
+            map.put("msg","添加成功");
+            return map;
+        }
+        map.put("flag", 0);
+        map.put("msg","添加失败");
+        return map;
+    }
+
+    /**
+     * 修改后台用户信息
+     * @return
+     */
+    @RequestMapping("updateSystemUser")
+    @ResponseBody
+    public Map updateSystemUser(@RequestBody SystemUser systemUser) {
+        boolean b = backService.updateSystemUser(systemUser);
+        HashMap map = new HashMap();
+        if (b){
+            map.put("flag", 1);
+            map.put("msg","修改成功");
+            return map;
+        }
+        map.put("flag", 0);
+        map.put("msg","修改失败");
+        return map;
+    }
+
+    /**
+     * 查询所有用户信息
+     * @return
+     */
+    @RequestMapping("selectSystemUserList")
+    @ResponseBody
+    public List<SystemUser> selectSystemUserList(Model model) {
+        List<SystemUser> userList = backService.selectSystemUserList();
+        model.addAttribute("userList",userList);
+        return userList;
+    }
+
 }
