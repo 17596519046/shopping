@@ -5,9 +5,9 @@
 <head>
   <meta charset="UTF-8">
   <title>Title</title>
-  <script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+  <script type="text/javascript" src="../../js/jquery-3.3.1.js"></script>
   <script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
-  <script type="text/javascript" src="../js/vue.js"></script>
+  <script type="text/javascript" src="../../js/vue.js"></script>
   <!-- 引入样式 -->
   <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
   <!-- 引入组件库 -->
@@ -17,7 +17,7 @@
 </head>
 <style>
   body{
-    background: url("../img/image/1.jpg.jpg") no-repeat center center fixed ;
+    background: url("../../img/image/1.jpg.jpg") no-repeat center center fixed ;
     background-size:cover;
     text-align:center;
     padding: 10px;
@@ -54,7 +54,7 @@
         },
         methods:{
             login(){
-                axios.post('/back/login',{"code":this.number,"pwd":this.password}).then(function (result) {
+                axios.post('/back/login',{"userName":this.number,"password":this.password}).then(function (result) {
                     var data=result.data;
                     if(data.flag == '0'){
                         alert(data.msg);

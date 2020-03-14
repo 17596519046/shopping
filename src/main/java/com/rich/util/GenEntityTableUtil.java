@@ -20,7 +20,7 @@ public class GenEntityTableUtil {
     private static final String pwd="TestBicon@123";
     private static final String user="root";
     private static final String url = "jdbc:mysql://47.101.145.236:3306/store" + "?user=" + user + "&password=" + pwd + "&useUnicode=true&characterEncoding=UTF-8";
-    private static String tablename = "buy_car";// 表名
+    private static String tablename = "role_menu";// 表名
     private static String setpackage="com.rich.pojo";//你的实体类所在的包的位置
 
     private static Connection getConnection=null;
@@ -41,7 +41,7 @@ public class GenEntityTableUtil {
                     //ResultSet rs =getConnection.getMetaData().getColumns(null, getXMLConfig.getSchema(),tableName.toUpperCase(), "%");
                     ResultSet rs1 = dbmd.getColumns(null, "%", tableName, "%");
                     ResultSet rs2 = dbmd.getColumns(null, "%", tableName, "%");
-                    File directory = new File("C:\\Users\\sunbo\\Desktop\\新建文件夹 (3)\\ssm\\src\\main\\java\\com\\rich\\pojo"+"\\"+ camelName(tablename)+".java");
+                    File directory = new File(path+"\\"+ camelName(tablename)+".java");
                     FileWriter fw = new FileWriter(directory);
                     PrintWriter pw = new PrintWriter(fw);
                     if(setpackage==null || setpackage==""){
@@ -165,7 +165,7 @@ public class GenEntityTableUtil {
                 || sqlType.equalsIgnoreCase("text")) {
             str = "String";
         } else if (sqlType.equalsIgnoreCase("datetime")) {
-            str = "String";
+            str = "Date";
         } else if (sqlType.equalsIgnoreCase("image")) {
             str = "Blod";
         }

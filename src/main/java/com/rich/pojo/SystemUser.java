@@ -41,4 +41,9 @@ public class SystemUser {
 	*角色id
 	*/
 	private int	roleId;
+
+	/**
+	 *状态（0:前台用户，1：后台用户）
+	 */
+	private int	status;
 }

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rich.mapper.BackLoginMapper">
+
+    <select id="selectAccountPassword" resultType="com.rich.pojo.SystemUser">
+        select * from system_user where user_name=#{userName} and password=#{password} and status = 1
+    </select>
+
+    <select id="selectRoleMenuList" resultType="com.rich.vo.MenuInfo">
+        SELECT
+            b.*
+        FROM
+            role_menu AS a
+            LEFT JOIN menu AS b ON a.menu_id = b.id
+    </select>
+
+    <insert id="saveSystemUser">
+        inner into system_user (user_name,password,email,phone,role_id) values (#{userName},#{password},#{email},#{phone},#{roleId})
+    </insert>
+
+    <update id="updateSystemUser">
+        update system_user set user_name=#{userName},password=#{password},email=#{email},phone=#{phone},role_id=#{roleId} where id = #{id}
+    </update>
+</mapper>
