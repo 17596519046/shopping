@@ -65,6 +65,7 @@
         <url-pattern>*.gif</url-pattern>
         <url-pattern>*.png</url-pattern>
         <url-pattern>*.jpg</url-pattern>
+        <url-pattern>*.html</url-pattern>
     </servlet-mapping>
 
     <!-- 访问根路径时的默认访问页面，从上到下匹配 -->

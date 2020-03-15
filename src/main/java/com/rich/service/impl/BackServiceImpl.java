@@ -43,7 +43,7 @@ public class BackServiceImpl implements BackService {
     public List<MenuInfo> selectMenuInfo(HttpServletRequest request) {
         SystemUser systemUser = (SystemUser) request.getSession().getAttribute("systemUser");
         //获取权限
-        List<MenuInfo> menuList = backLoginMapper.selectRoleMenuList(systemUser.getRoleId());
+        List<MenuInfo> menuList = backLoginMapper.selectRoleMenuList(1);
         List<MenuInfo> sonMenu = new ArrayList<>();
         List<MenuInfo> parentMenu = new ArrayList<>();
         for (MenuInfo key : menuList) {
@@ -53,9 +53,8 @@ public class BackServiceImpl implements BackService {
                 sonMenu.add(key);
             }
         }
-        List<MenuInfo> newMenu = new ArrayList<>();
-        List<MenuInfo> list = new ArrayList<>();
         for (MenuInfo key : parentMenu) {
+            List<MenuInfo> newMenu = new ArrayList<>();
             for (MenuInfo menu : sonMenu) {
                 //如果父菜单的id等于子菜单的父id 说明是同一个目录下的
                 if (key.getId() == menu.getParentId()){
@@ -63,9 +62,8 @@ public class BackServiceImpl implements BackService {
                 }
             }
             key.setMenuInfoList(newMenu);
-            list.add(key);
         }
-        return list;
+        return parentMenu;
     }
 
     /**

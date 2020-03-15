@@ -47,10 +47,11 @@ public class BackController {
      * @return
      */
     @RequestMapping("home")
-    public String selectMenuInfo(Model model,HttpServletRequest request) {
+    @ResponseBody
+    public List<MenuInfo> selectMenuInfo(Model model,HttpServletRequest request) {
         List<MenuInfo> menuList = backService.selectMenuInfo(request);
         model.addAttribute("menuList",menuList);
-        return "pages/back/menu";
+        return menuList;
     }
 
     /**
