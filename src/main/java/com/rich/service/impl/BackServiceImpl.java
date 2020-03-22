@@ -26,6 +26,7 @@ public class BackServiceImpl implements BackService {
      */
     @Override
     public boolean backLogin(SystemUser systemUser, HttpServletRequest request) {
+        // 查询数据库获取用户
         SystemUser sys = backLoginMapper.selectAccountPassword(systemUser);
         if (sys == null){
             return false;

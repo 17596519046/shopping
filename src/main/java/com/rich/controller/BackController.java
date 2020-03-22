@@ -28,8 +28,19 @@ public class BackController {
      * @return
      */
     @RequestMapping("/index")
-    public String selectAllOrder() {
-        return "pages/after/index";
+    public String backIndex() {
+        // 跳到后台主页
+        return "pages/back/index";
+    }
+
+    /***
+     * 跳到登陆页面
+     * @return
+     */
+    @RequestMapping("/backLogin")
+    public String backLogin() {
+        // 跳到登陆页面
+        return "pages/back/login";
     }
 
 
@@ -38,9 +49,10 @@ public class BackController {
      * @param systemUser 实体类
      * @return
      */
-    @RequestMapping("login")
+    @RequestMapping("/login")
     @ResponseBody
     public Map selectAll(@RequestBody SystemUser systemUser, HttpServletRequest request) {
+        // service层调用后台登陆接口
         boolean b = backService.backLogin(systemUser, request);
         HashMap map = new HashMap();
         map.put("flag", 1);

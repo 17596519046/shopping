@@ -59,7 +59,7 @@
                     if(data.flag == '0'){
                         alert(data.msg);
                     }else{
-                        window.location.href="/back/home";
+                        window.location.href="/back/index";
                     }
                 })
             }
