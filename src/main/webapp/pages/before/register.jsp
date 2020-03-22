@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Type" content="text/html; charset=gbk">
     <title>个人注册</title>
+    <link rel="icon" href="/img/image/fav.jpg"/>
     <link type="text/css" rel="stylesheet" href="//misc.360buyimg.com/jdf/1.0.0/unit/??ui-base/1.0.0/ui-base.css">
     <link type="text/css" rel="stylesheet" href="//misc.360buyimg.com/user/reg/3.0.0/css/tinyscrollbar-170524.css">
     <script type="text/javascript" src="//misc.360buyimg.com/jdf/lib/jquery-1.6.4.js"></script>
@@ -34,7 +35,7 @@
 <!-- widget header begin -->
 <div class="header">
     <div class="logo-con w clearfix">
-        <a href="https://www.jd.com" class="logo ">
+            <a href="#" style="height: 60%;background-image: url('/img/image/yu.jpg');background-size: cover;background-position: 0px -50px"  class="logo ">
         </a>
         <div class="logo-title">欢迎注册</div>
 

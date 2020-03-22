@@ -35,7 +35,7 @@
 <!-- widget header begin -->
 <div class="header">
     <div class="logo-con w clearfix">
-        <a href="#" style="background-image: url('/img/image/yu.jpg');background-size: cover;background-position: 0px -50px" class="logo ">
+        <a href="#" style="height:60%;background-image: url('/img/image/yu.jpg');background-size: cover;background-position: 0px -50px" class="logo ">
         </a>
         <div class="logo-title">找回密码</div>
 

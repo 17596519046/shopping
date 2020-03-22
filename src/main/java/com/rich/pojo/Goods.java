@@ -23,6 +23,10 @@ public class Goods{
 	*/
 	private String	detail;
 	/**
+	*城市
+	*/
+	private String	area;
+	/**
 	*库存数量
 	*/
 	private int	num;

@@ -34,4 +34,8 @@ public class BuyCar{
 	*修改时间
 	*/
 	private Date updateTime;
+	/**
+	*订单id
+	*/
+	private int orderId;
 }
