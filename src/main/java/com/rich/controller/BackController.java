@@ -23,6 +23,16 @@ public class BackController {
     @Autowired
     BackService backService;
 
+    /***
+     * 查看订单
+     * @return
+     */
+    @RequestMapping("/index")
+    public String selectAllOrder() {
+        return "pages/after/index";
+    }
+
+
     /**
      * 后台登录接口
      * @param systemUser 实体类

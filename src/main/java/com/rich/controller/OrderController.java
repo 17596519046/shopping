@@ -26,14 +26,6 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
-    /***
-     * 查看订单
-     * @return
-     */
-    @RequestMapping("/index")
-    public String selectAllOrder() {
-        return "pages/after/index";
-    }
 
 }
 

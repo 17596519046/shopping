@@ -36,14 +36,18 @@
                             <template slot="title">
                                 <span slot="title" style="">{{articles.name}}</span>
                             </template>
-                            <el-menu-item-group>
-                                <el-menu-item index="articles.id-article.id" v-for="(article,index) in articles.menuInfoList" :key="index">{{article.name}}</el-menu-item>
-                            </el-menu-item-group>
+                            <a target="right" href="/vehicleType/jumpVehicleType" style="text-decoration: blink">
+                                <el-menu-item-group>
+                                    <el-menu-item index="articles.id-article.id" v-for="(article,index) in articles.menuInfoList" :key="index">{{article.name}}</el-menu-item>
+                                </el-menu-item-group>
+                            </a>
                         </el-submenu>
                     </el-menu>
                 </el-aside>
 
-                <el-main>Main</el-main>
+                <el-main>
+                    <iframe name="right" style="width:100%;height:100% ;background-color: #e9eef3"></iframe>
+                </el-main>
 
             </el-container>
         </el-container>
