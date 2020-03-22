@@ -1,4 +1,5 @@
 package com.rich.pojo;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -7,7 +8,7 @@ import java.util.Date;
 /**
     * system_user 实体类
     * 2020-03-11 12:30:40
-   */ 
+   */
 @Data
 @Accessors(chain = true)
 public class SystemUser {
@@ -34,6 +35,7 @@ public class SystemUser {
 	/**
 	*创建时间
 	*/
+	@JsonFormat(timezone="GMT+8", pattern="yyyy-MM-dd HH:mm:ss")
 	private Date createTime;
 	/**
 	*修改时间

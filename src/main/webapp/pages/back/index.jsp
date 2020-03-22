@@ -30,7 +30,6 @@
             </el-header>
 
             <el-container>
-
                 <el-aside width="300px">
                     <el-menu :default-openeds="['1']" default-active="1-4-1" class="el-menu-vertical-demo" :collapse="isCollapse"  v-for="(articles,index) in allArticles" :key="index">
                         <el-submenu index="1">
@@ -49,7 +48,8 @@
                 </el-aside>
 
                 <el-main>
-                    <iframe name="right" scrolling="no" style="width:97%;height:650px;background-color: #e9eef3;overflow: hidden" frameborder="0"></iframe>
+                    <iframe name="right" scrolling="no" style="width:97%;height:650px;overflow: hidden" frameborder="0">
+                    </iframe>
                 </el-main>
 
             </el-container>
@@ -100,14 +100,12 @@
     }
 
     .el-aside {
-        background-color: #D3DCE6;
         color: #333;
         text-align: center;
         line-height: 200px;
     }
 
     .el-main {
-        background-color: #E9EEF3;
         color: #333;
         text-align: center;
         line-height: 160px;
