@@ -11,7 +11,8 @@
             b.*
         FROM
             role_menu AS a
-            LEFT JOIN menu AS b ON a.menu_id = b.id
+        LEFT JOIN menu AS b ON a.menu_id = b.id
+        where role_id = #{roleId}
     </select>
 
     <insert id="saveSystemUser">

@@ -44,7 +44,7 @@ public class BackServiceImpl implements BackService {
     public List<MenuInfo> selectMenuInfo(HttpServletRequest request) {
         SystemUser systemUser = (SystemUser) request.getSession().getAttribute("systemUser");
         //获取权限
-        List<MenuInfo> menuList = backLoginMapper.selectRoleMenuList(1);
+        List<MenuInfo> menuList = backLoginMapper.selectRoleMenuList(systemUser.getRoleId());
         List<MenuInfo> sonMenu = new ArrayList<>();
         List<MenuInfo> parentMenu = new ArrayList<>();
         for (MenuInfo key : menuList) {
