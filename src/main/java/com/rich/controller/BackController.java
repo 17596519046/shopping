@@ -43,6 +43,16 @@ public class BackController {
         return "pages/back/login";
     }
 
+    /***
+     * 跳到登陆页面
+     * @return
+     */
+    @RequestMapping("/user")
+    public String user() {
+        // 跳到登陆页面
+        return "pages/back/user";
+    }
+
 
     /**
      * 后台登录接口

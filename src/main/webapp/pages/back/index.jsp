@@ -21,7 +21,7 @@
 <body>
 <div id="app">
     <template>
-        <el-container>
+        <el-container type="fix" style="height: 900px">
             <el-header height="100px">
                 <el-row :gutter="20">
                     <el-col :span="8"><div class="grid-content bg-purple"></div></el-col>
@@ -29,24 +29,27 @@
                 </el-row>
             </el-header>
 
-            <el-container style="height: 700px">
+            <el-container>
+
                 <el-aside width="300px">
                     <el-menu :default-openeds="['1']" default-active="1-4-1" class="el-menu-vertical-demo" :collapse="isCollapse"  v-for="(articles,index) in allArticles" :key="index">
                         <el-submenu index="1">
                             <template slot="title">
                                 <span slot="title" style="">{{articles.name}}</span>
                             </template>
-                            <a target="right" href="/vehicleType/jumpVehicleType" style="text-decoration: blink">
-                                <el-menu-item-group>
-                                    <el-menu-item index="articles.id-article.id" v-for="(article,index) in articles.menuInfoList" :key="index">{{article.name}}</el-menu-item>
-                                </el-menu-item-group>
-                            </a>
+                            <el-menu-item-group>
+                                <el-menu-item index="articles.id-article.id" v-for="(article,index) in articles.menuInfoList" :key="index">
+                                    <a target="right" :href="article.action" style="text-decoration: blink">
+                                        {{article.name}}
+                                    </a>
+                                </el-menu-item>
+                            </el-menu-item-group>
                         </el-submenu>
                     </el-menu>
                 </el-aside>
 
                 <el-main>
-                    <iframe name="right" style="width:100%;height:100% ;background-color: #e9eef3"></iframe>
+                    <iframe name="right" scrolling="no" style="width:97%;height:650px;background-color: #e9eef3;overflow: hidden" frameborder="0"></iframe>
                 </el-main>
 
             </el-container>
@@ -66,7 +69,8 @@
             return {
                 isCollapse: false,
                 allArticles: [],
-                defaultOpen: []
+                defaultOpen: [],
+                toUrl: ''
             };
         },
         methods: {
@@ -77,8 +81,9 @@
                     var obj = JSON.parse(JSON.stringify(result));
                     var json = obj.data;
                     that.allArticles = json;
+                    console.log(that.allArticles);
                 });
-            }
+            },
         },
         created: function() {
             this.getArticle();
