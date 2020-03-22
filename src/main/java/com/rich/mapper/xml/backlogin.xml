@@ -27,4 +27,7 @@
     <select id="selectSystemUserList" resultType="com.rich.pojo.SystemUser">
         select * from system_user
     </select>
+    <delete id="deleteUser">
+        delete from system_user where id = #{userId}
+    </delete>
 </mapper>

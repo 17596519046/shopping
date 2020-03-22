@@ -38,4 +38,10 @@ public interface BackService {
      * @return
      */
     List<SystemUser> selectSystemUserList();
+
+    /**
+     * 删除用户
+     * @param userId
+     */
+    void deleteUser(Integer userId);
 }

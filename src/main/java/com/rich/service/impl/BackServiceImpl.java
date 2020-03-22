@@ -96,5 +96,10 @@ public class BackServiceImpl implements BackService {
         return backLoginMapper.selectSystemUserList();
     }
 
+    @Override
+    public void deleteUser(Integer userId) {
+        backLoginMapper.deleteUser(userId);
+    }
+
 
 }

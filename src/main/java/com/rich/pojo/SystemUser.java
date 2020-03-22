@@ -1,8 +1,10 @@
 package com.rich.pojo;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import java.beans.Transient;
 import java.util.Date;
 
 /**
@@ -50,4 +52,8 @@ public class SystemUser {
 	 *状态（0:前台用户，1：后台用户）
 	 */
 	private int	status;
+
+    @TableField(exist=false)
+	private String roleName;
+
 }

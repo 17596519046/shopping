@@ -87,32 +87,18 @@ public class BackController {
     }
 
     /**
-     * 添加后台用户信息
-     * @return
-     */
-    @RequestMapping("saveSystemUser")
-    @ResponseBody
-    public Map saveSystemUser(@RequestBody SystemUser systemUser) {
-        boolean b = backService.saveSystemUser(systemUser);
-        HashMap map = new HashMap();
-        if (b){
-            map.put("flag", 1);
-            map.put("msg","添加成功");
-            return map;
-        }
-        map.put("flag", 0);
-        map.put("msg","添加失败");
-        return map;
-    }
-
-    /**
      * 修改后台用户信息
      * @return
      */
     @RequestMapping("updateSystemUser")
     @ResponseBody
-    public Map updateSystemUser(@RequestBody SystemUser systemUser) {
-        boolean b = backService.updateSystemUser(systemUser);
+    public Map updateSystemUser(SystemUser systemUser) {
+        boolean b = true;
+        if (systemUser.getId() != 0) {
+            b = backService.updateSystemUser(systemUser);
+        } else {
+            b = backService.saveSystemUser(systemUser);
+        }
         HashMap map = new HashMap();
         if (b){
             map.put("flag", 1);
@@ -125,6 +111,16 @@ public class BackController {
     }
 
     /**
+     * 删除用户
+     * @return
+     */
+    @RequestMapping("deleteUser")
+    @ResponseBody
+    public void deleteUser(Integer userId) {
+        backService.deleteUser(userId);
+    }
+
+    /**
      * 查询所有用户信息
      * @return
      */
@@ -132,6 +128,14 @@ public class BackController {
     @ResponseBody
     public List<SystemUser> selectSystemUserList(Model model) {
         List<SystemUser> userList = backService.selectSystemUserList();
+        for (SystemUser systemUser : userList) {
+            if (systemUser.getRoleId() == 1) {
+                systemUser.setRoleName("管理员");
+            }
+            if (systemUser.getRoleId() == 0) {
+                systemUser.setRoleName("普通管理员");
+            }
+        }
         model.addAttribute("userList",userList);
         return userList;
     }
