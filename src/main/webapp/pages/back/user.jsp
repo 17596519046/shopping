@@ -86,6 +86,9 @@
                     var json = obj.data;
                     that.tableData = json;
                 });
+            },
+            handleClick(row) {
+                console.log(row);
             }
         },
         created: function() {

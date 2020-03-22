@@ -53,8 +53,6 @@
     <link type="text/css" rel="stylesheet"
           href="//misc.360buyimg.com/user/cart/widget/??common/common.css,header-2017/header-2017.css,cart-sidebar/cart-sidebar.css,cart-sidebar-follow/cart-sidebar-follow.css,cart-filter-bar/cart-filter-bar.css,cart-similar/cart-similar.css,cart-gift/cart-gift.css,order-combined/order-combined.css,unmarket/unmarket.css,cart-inner-new/cart-inner-new.css,cart-toolbar-new/cart-toolbar-new.css,cart-removed/cart-removed.css,cart-full/cart-full.css,cart-smart/cart-smart.css,cart-tabs-new/cart-tabs-new.css,p-detect/p-detect.css,backpanel/backpanel.css,order-cross/order-cross.css"
           source="widget"/>
-
-
 </head>
 <%
     SystemUser user= (SystemUser) request.getSession().getAttribute("user");
@@ -184,6 +182,22 @@
                         <i
                                 class="iconfont">&#xe60b;</i></button>
                 </div>
+
+                <div id="settleup" class="dropdown" clstag="h|keycount|head|cart_null">
+                    <div class="cw-icon">
+                        <i class="iconfont">&#xe60c;</i>
+                        <a href="#" onclick="mySelf()">我的购物车</a>
+                        <%--<a target="_blank" href="#">我的购物车</a>--%>
+                        <i class="ci-count" id="shopping-amount"></i>
+                    </div>
+                    <div class="dropdown-layer">
+                        <div id="J_cart_pop">
+                            <div class="cart_empty">
+                                <i class="cart_empty_img"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -194,7 +208,7 @@
     <ul class="switch-cart">
         <li class="switch-cart-item curr">
             <a href="//cart.jd.com/cart.action">
-                <em>全部商品</em>
+                <em>我的订单</em>
                 <%--<span class="number">1</span>--%>
             </a>
         </li>
@@ -209,20 +223,11 @@
 <div id="jd-cart">
     <div class="cart-main cart-main-new">
         <div class="cart-thead">
-            <!-- 我的冰箱 -->
-            <%--<div class="column t-checkbox">--%>
-            <%--<div class="cart-checkbox">--%>
-            <%--<input type="checkbox" id="toggle-checkboxes_up" name="toggle-checkboxes" class="jdcheckbox" clstag="clickcart|keycount|xincart|cart_allCheck">--%>
-            <%--<label class="checked" for="">勾选全部商品</label>--%>
-            <%--</div>--%>
-            <%--全选--%>
-            <%--</div>--%>
             <div class="column t-goods">商品</div>
             <div class="column t-props"></div>
             <div class="column t-price">单价</div>
             <div class="column t-quantity">数量</div>
             <div class="column t-sum">小计</div>
-            <div class="column t-action">操作</div>
         </div>
         <div id="cart-list"><input type="hidden" id="allSkuIds" value="57730305717">
             <input type="hidden" id="outSkus" value="">
@@ -366,55 +371,16 @@
                                 <div class="cell p-quantity">
                                     <!--单品-->
                                     <div class="quantity-form">
-                                        <a onclick="subtract('${po.id}')"
-                                           class="decrement disabled">-</a>
-                                        <input autocomplete="off" type="text" class="itxt" value="${po.num}"
+                                        <%--<a onclick="subtract('${po.id}')"--%>
+                                           <%--class="decrement disabled">-</a>--%>
+                                        <input readonly="readonly" autocomplete="off" type="text" class="itxt" value="${po.num}"
                                                id="${po.id}number" minnum="1">
-                                        <a  onclick="add('${po.id}')"
-                                           class="increment">+</a>
-                                        <script>
-                                            function subtract(id) {
-                                                var count = id+"number"
-                                                var number = $("#"+count).val();
-                                                var num = 1;
-                                                if(number > 1){
-                                                    num = number - 1;
-                                                    $("#"+count).val(num);
-                                                    var price = $("#"+id+"prices").html();
-                                                    var mon = $("#"+id+"money").html();
-                                                    var counts = parseFloat(parseFloat(price) - parseFloat(mon)).toFixed(2);
-                                                    $("#"+id+"prices").html(counts);
-                                                    var account = $("#account").html();
-                                                    var accounts = parseFloat(parseFloat(account) - parseFloat(mon)).toFixed(2);
-                                                    $("#account").html(accounts);
-                                                }
-                                            }
-                                            function add(id) {
-                                                var count = id+"number"
-                                                var number = $("#"+count).val();
-                                                var num = parseInt(number) + parseInt(1);
-                                                $("#"+count).val(num);
-                                                var price = $("#"+id+"prices").html();
-                                                var mon = $("#"+id+"money").html();
-                                                var counts = parseFloat(parseFloat(price) + parseFloat(mon)).toFixed(2);
-                                                $("#"+id+"prices").html(counts);
-                                                var account = $("#account").html();
-                                                var accounts = parseFloat(parseFloat(account) + parseFloat(mon)).toFixed(2);
-                                                $("#account").html(accounts);
-                                            }
-                                        </script>
+                                        <%--<a  onclick="add('${po.id}')"--%>
+                                           <%--class="increment">+</a>--%>
                                     </div>
-                                    <%--<div class="ac ftx-03 quantity-txt" _stock="stock_57730305717">有货</div>--%>
                                 </div>
                                 <div class="cell p-sum">
                                     <strong id="${po.id}prices"><fmt:formatNumber type="number" value="${po.num*po.price}" pattern="0.00" maxFractionDigits="2"></fmt:formatNumber></strong>
-                                </div>
-                                <div class="cell p-ops">
-                                    <!--单品-->
-                                    <a id="remove_692560_57730305717_1" clstag="clickcart|keycount|xincart|cart_sku_del"
-                                       data-name="安步（ANBU）轻羽筋膜枪按摩枪 蜜蜂静音大..." data-more="removed_299.00_1"
-                                       class="cart-remove" href="/before/deleteBuyCar?id=${po.id}" ob="false">删除</a>
-                                    <%--<a href="javascript:void(0);" class="cart-follow" id="follow_692560_57730305717_1" clstag="clickcart|keycount|xincart|cart_sku_guanzhu" ob="false">移到我的关注</a>--%>
                                 </div>
                             </div>
                             <div class="item-extra mb10">
@@ -432,38 +398,6 @@
                                 <div class="selected-item-list hide" style="display: none;">
                                 </div>
                                 <div class="options-box">
-                                    <div class="toolbar-right toolbar-right-new">
-                                        <div class="normal">
-                                            <div class="comm-right">
-                                                <div class="btn-area">
-                                                    <a onclick="settle()"
-                                                       clstag="clickcart|keycount|xincart|cart_gotoOrder" class="submit-btn" data-bind="4">
-                                                        去结算<b></b></a>
-                                                </div>
-                                                <div class="price-sum">
-                                                    <div>
-                                                        <span class="txt txt-new">总价：</span>
-                                                        <span class="price sumPrice">
-										<em id="account" data-bind="0.00">${price}</em>
-									</span>
-                                                        <b class="ml5 price-tips"></b>
-                                                        <div class="price-tipsbox-new" style="display: none; left: 159.85px;">
-                                                            <div class="ui-tips-main">不含运费及送装服务费</div>
-                                                            <span class="price-tipsbox-arrow"></span>
-                                                        </div>
-                                                        <br>
-                                                        <%--<div id="price-sum-extra-1" class="price-sum-extra"><span class="">促销：</span><span--%>
-                                                                <%--class="">-¥0.00</span></div>--%>
-                                                    </div>
-                                                </div>
-                                                <div class="amount-sum">
-                                                    <%--已选择<em>0</em>件商品<b class="up" clstag="clickcart|keycount|xincart|cart_thumbnailOpen"></b>--%>
-                                                </div>
-                                                <div class="clr"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-
                                 </div>
                             </div>
                         </div>
@@ -476,6 +410,7 @@
 
 <div class="cart-smart-main"><h3 class="ac ftx-06"><b class="smart-head hl"></b><i class="smart-logo"></i>购物车帮你选<b
         class="smart-head hr"></b></h3>
+    <p class="ac ftx-10 mt5">看看加购过该商品的人还喜欢哪些</p>
 </div>
 <div id="J_footer" class="footer">
     <div class="mod_service" clstag="h|keycount|btm|btmnavi_null01">
@@ -500,8 +435,166 @@
             </ul>
         </div>
     </div>
+    <div class="mod_help" clstag="h|keycount|btm|btmnavi_null02">
+        <div class="grid_c1 mod_help_inner">
+            <div class="mod_help_list">
+                <div class="mod_help_nav"><h5 class="mod_help_nav_tit">购物指南</h5>
+                    <ul class="mod_help_nav_con">
+                        <li><a href="//help.jd.com/user/issue/list-29.html" target="_blank" rel="noopener noreferrer">购物流程</a>
+                        </li>
+                        <li><a href="//help.jd.com/user/issue/list-151.html" target="_blank" rel="noopener noreferrer">会员介绍</a>
+                        </li>
+                        <li><a href="//help.jd.com/user/issue/list-297.html" target="_blank" rel="noopener noreferrer">生活旅行</a>
+                        </li>
+                        <li><a href="//help.jd.com/user/issue.html" target="_blank" rel="noopener noreferrer">常见问题</a>
+                        </li>
+                        <li><a href="//help.jd.com/user/issue/list-136.html" target="_blank" rel="noopener noreferrer">大家电</a>
+                        </li>
+                        <li><a href="//help.jd.com/user/custom.html" target="_blank" rel="noopener noreferrer">联系客服</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="mod_help_nav"><h5 class="mod_help_nav_tit">配送方式</h5>
+                    <ul class="mod_help_nav_con">
+                        <li><a href="//help.jd.com/user/issue/list-81-100.html" target="_blank"
+                               rel="noopener noreferrer">上门自提</a></li>
+                        <li><a href="//help.jd.com/user/issue/list-81.html" target="_blank" rel="noopener noreferrer">211限时达</a>
+                        </li>
+                        <li><a href="//help.jd.com/user/issue/103-983.html" target="_blank" rel="noopener noreferrer">配送服务查询</a>
+                        </li>
+                        <li><a href="//help.jd.com/user/issue/109-188.html" target="_blank" rel="noopener noreferrer">配送费收取标准</a>
+                        </li>
+                        <li><a href="//help.joybuy.com/help/question-list-201.html" target="_blank"
+                               rel="noopener noreferrer">海外配送</a></li>
+                    </ul>
+                </div>
+                <div class="mod_help_nav"><h5 class="mod_help_nav_tit">支付方式</h5>
+                    <ul class="mod_help_nav_con">
+                        <li><a href="//help.jd.com/user/issue/list-172.html" target="_blank" rel="noopener noreferrer">货到付款</a>
+                        </li>
+                        <li><a href="//help.jd.com/user/issue/list-173.html" target="_blank" rel="noopener noreferrer">在线支付</a>
+                        </li>
+                        <li><a href="//help.jd.com/user/issue/list-176.html" target="_blank" rel="noopener noreferrer">分期付款</a>
+                        </li>
+                        <li><a href="//help.jd.com/user/issue/list-175.html" target="_blank" rel="noopener noreferrer">公司转账</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="mod_help_nav"><h5 class="mod_help_nav_tit">售后服务</h5>
+                    <ul class="mod_help_nav_con">
+                        <li><a href="//help.jd.com/user/issue/321-981.html" target="_blank" rel="noopener noreferrer">售后政策</a>
+                        </li>
+                        <li><a href="//help.jd.com/user/issue/list-132.html" target="_blank" rel="noopener noreferrer">价格保护</a>
+                        </li>
+                        <li><a href="//help.jd.com/user/issue/130-978.html" target="_blank" rel="noopener noreferrer">退款说明</a>
+                        </li>
+                        <li><a href="//myjd.jd.com/repair/repairs.action" target="_blank" rel="noopener noreferrer">返修/退换货</a>
+                        </li>
+                        <li><a href="//help.jd.com/user/issue/list-50.html" target="_blank" rel="noopener noreferrer">取消订单</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="mod_help_nav"><h5 class="mod_help_nav_tit">特色服务</h5>
+                    <ul class="mod_help_nav_con">
+                        <li><a href="//1paipai.jd.com/" target="_blank" rel="noopener noreferrer">夺宝岛</a></li>
+                        <li><a href="//help.jd.com/user/issue/list-134.html" target="_blank" rel="noopener noreferrer">DIY装机</a>
+                        </li>
+                        <li><a href="//fuwu.jd.com/" target="_blank" rel="noopener noreferrer">延保服务</a></li>
+                        <li><a href="//o.jd.com/market/index.action" target="_blank" rel="noopener noreferrer">京东E卡</a>
+                        </li>
+                        <li><a href="//mobile.jd.com/" target="_blank" rel="noopener noreferrer">京东通信</a></li>
+                        <li><a href="//smart.jd.com/" target="_blank" rel="noopener noreferrer">京鱼座智能</a></li>
+                    </ul>
+                </div>
+                <div class="mod_help_cover"><h5 class="mod_help_cover_tit">京东自营覆盖区县</h5>
+                    <div class="mod_help_cover_con"><p class="mod_help_cover_info">
+                        京东已向全国2661个区县提供自营配送服务，支持货到付款、POS机刷卡和售后上门服务。</p>
+                        <p class="mod_help_cover_more"><a href="//help.jd.com/user/issue/103-983.html" target="_blank"
+                                                          rel="noopener noreferrer">查看详情<i class="iconfont"></i></a>
+                        </p></div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="mod_copyright">
         <div class="grid_c1 mod_copyright_inner"><p class="mod_copyright_links" clstag="h|keycount|btm|btmnavi_null03">
+            <a href="//about.jd.com" target="_blank" rel="noopener noreferrer">关于我们</a><span
+                class="mod_copyright_split">|</span><a href="//about.jd.com/contact" target="_blank"
+                                                       rel="noopener noreferrer">联系我们</a><span
+                class="mod_copyright_split">|</span><a href="//help.jd.com/user/custom.html" target="_blank"
+                                                       rel="noopener noreferrer">联系客服</a><span
+                class="mod_copyright_split">|</span><a href="//lai.jd.com" target="_blank" rel="noopener noreferrer">合作招商</a><span
+                class="mod_copyright_split">|</span><a href="//helpcenter.jd.com/venderportal/index.html"
+                                                       target="_blank" rel="noopener noreferrer">商家帮助</a><span
+                class="mod_copyright_split">|</span><a href="//jzt.jd.com" target="_blank" rel="noopener noreferrer">营销中心</a><span
+                class="mod_copyright_split">|</span><a href="//app.jd.com/" target="_blank" rel="noopener noreferrer">手机京东</a><span
+                class="mod_copyright_split">|</span><a href="//club.jd.com/links.aspx" target="_blank"
+                                                       rel="noopener noreferrer">友情链接</a><span
+                class="mod_copyright_split">|</span><a href="//media.jd.com/" target="_blank" rel="noopener noreferrer">销售联盟</a><span
+                class="mod_copyright_split">|</span><a
+                href="//pro.jd.com/mall/active/3WA2zN8wkwc9fL9TxAJXHh5Nj79u/index.html" target="_blank"
+                rel="noopener noreferrer">京东社区</a><span class="mod_copyright_split">|</span><a
+                href="//pro.jd.com/mall/active/3TF25tMdrnURET8Ez1cW9hzfg3Jt/index.html" target="_blank"
+                rel="noopener noreferrer">风险监测</a><span class="mod_copyright_split">|</span><a
+                href="//about.jd.com/privacy/" target="_blank" rel="noopener noreferrer">隐私政策</a><span
+                class="mod_copyright_split">|</span><a href="//gongyi.jd.com" target="_blank" rel="noopener noreferrer">京东公益</a><span
+                class="mod_copyright_split">|</span><a href="//www.joybuy.com/" target="_blank"
+                                                       rel="noopener noreferrer">English Site</a><span
+                class="mod_copyright_split">|</span><a href="//corporate.jd.com" target="_blank"
+                                                       rel="noopener noreferrer">Media &amp; IR</a></p>
+            <div class="mod_copyright_info">
+                <div class="mod_copyright_cert" clstag="h|keycount|btm|btmnavi_null04"><p><a
+                        href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11000002000088"
+                        target="_blank" rel="noopener noreferrer">京公网安备 11000002000088号</a><span
+                        class="mod_copyright_split">|</span><span>京ICP证070359号</span><span
+                        class="mod_copyright_split">|</span><a
+                        href="//img30.360buyimg.com/poprx/jfs/t1/45702/1/7206/3652062/5d4d3f4fE7ea82da4/207332da28ae8230.png"
+                        target="_blank" rel="noopener noreferrer">互联网药品信息服务资格证编号(京)-经营性-2014-0008</a><span
+                        class="mod_copyright_split">|</span><span>新出发京零&nbsp;字第大120007号</span></p>
+                    <p><span>互联网出版许可证编号新出网证(京)字150号</span><span class="mod_copyright_split">|</span><a
+                            href="//pro.jd.com/mall/active/3bVDLXHdwVmdQksGF8TtS7ocq1NY/index.html" target="_blank"
+                            rel="noopener noreferrer">出版物经营许可证</a><span class="mod_copyright_split">|</span><a
+                            href="//misc.360buyimg.com/wz/wlwhjyxkz.jpg" target="_blank" rel="noopener noreferrer">网络文化经营许可证京网文[2014]2148-348号</a><span
+                            class="mod_copyright_split">|</span><span>违法和不良信息举报电话：4006561155</span></p>
+                    <p><span>Copyright&nbsp;©&nbsp;2004&nbsp;-&nbsp;2020&nbsp;&nbsp;京东JD.com&nbsp;版权所有</span><span
+                            class="mod_copyright_split">|</span><span>消费者维权热线：4006067733</span><a
+                            href="//pro.jd.com/mall/active/38PitHBfR7ZopNHRSHnuuWR5AMDL/index.html" target="_blank"
+                            rel="noopener noreferrer" class="mod_copyright_license">经营证照</a><span
+                            class="mod_copyright_split">|</span><span>(京)网械平台备字(2018)第00003号</span><span
+                            class="mod_copyright_split">|</span><a
+                            href="//storage.jd.com/imgtools/cbdaa22553-dccaf290-d1af-11e8-a840-89f99f5f0056.jpeg"
+                            target="_blank" rel="noopener noreferrer" class="mod_business_license">营业执照</a></p></div>
+                <div class="mod_copyright_inter"><p><a class="mod_copyright_inter_lk"
+                                                       href="//www.joybuy.com/?source=1&amp;visitor_from=3"
+                                                       target="_blank" rel="noopener noreferrer"
+                                                       clstag="h|keycount|btm|btmnavi_null0501"><i
+                        class="mod_copyright_inter_ico mod_copyright_inter_ico_global"></i>Global Site</a><span
+                        class="mod_copyright_split">|</span><a class="mod_copyright_inter_lk"
+                                                               href="//www.jd.ru/?source=1&amp;visitor_from=3"
+                                                               target="_blank" rel="noopener noreferrer"
+                                                               clstag="h|keycount|btm|btmnavi_null0502"><i
+                        class="mod_copyright_inter_ico mod_copyright_inter_ico_rissia"></i>Сайт России</a><span
+                        class="mod_copyright_split">|</span><a class="mod_copyright_inter_lk"
+                                                               href="//www.jd.id/?source=1&amp;visitor_from=3"
+                                                               target="_blank" rel="noopener noreferrer"
+                                                               clstag="h|keycount|btm|btmnavi_null0503"><i
+                        class="mod_copyright_inter_ico mod_copyright_inter_ico_indonesia"></i>Situs Indonesia</a><span
+                        class="mod_copyright_split">|</span><a class="mod_copyright_inter_lk"
+                                                               href="//www.joybuy.es/?source=1&amp;visitor_from=3"
+                                                               target="_blank" rel="noopener noreferrer"
+                                                               clstag="h|keycount|btm|btmnavi_null0504"><i
+                        class="mod_copyright_inter_ico mod_copyright_inter_ico_spain"></i>Sitio de España</a><span
+                        class="mod_copyright_split">|</span><a class="mod_copyright_inter_lk"
+                                                               href="//www.jd.co.th/?source=1&amp;visitor_from=3"
+                                                               target="_blank" rel="noopener noreferrer"
+                                                               clstag="h|keycount|btm|btmnavi_null0505"><i
+                        class="mod_copyright_inter_ico mod_copyright_inter_ico_thailand"></i>เว็บไซต์ประเทศไทย</a></p>
+                </div>
+                <div class="mod_copyright_subsites" clstag="h|keycount|btm|btmnavi_null06"><p><span>京东旗下网站：</span><a
+                        href="https://www.jdpay.com/" target="_blank" rel="noopener noreferrer">京东钱包</a><span
+                        class="mod_copyright_split">|</span><a href="http://www.jdcloud.com" target="_blank"
+                                                               rel="noopener noreferrer">京东智联云</a></p></div>
+            </div>
             <p class="mod_copyright_auth" clstag="h|keycount|btm|btmnavi_null07"><a
                     class="mod_copyright_auth_ico mod_copyright_auth_ico_2"
                     href="https://ss.knet.cn/verifyseal.dll?sn=2008070300100000031&amp;ampct=df&amp;amppa=294005"

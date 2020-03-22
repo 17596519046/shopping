@@ -18,8 +18,20 @@ public class BuyCarInfo {
      */
     private int num;
     /***
+     * 主键id
+     */
+    private int id;
+    /***
+     * 商品id
+     */
+    private int goodsId;
+    /***
      * 商品图片地址
      */
     private String img;
+    /***
+     * 订单id
+     */
+    private int orderId;
 
 }

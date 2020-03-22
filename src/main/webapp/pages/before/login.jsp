@@ -27,15 +27,12 @@
 <!-- SDK 登录 -->
 <div class="w">
     <div id="logo">
-        <a href="//www.jd.com/" clstag="pageclick|keycount|20150112ABD|45">
-            <img src="//misc.360buyimg.com/lib/img/e/logo-201305-b.png" alt="京东" width="170" height="60">
-        </a>
+            <%--<img style="width: 50%;height:85px;position: absolute;margin-left: 15%;margin-top: -5%" src="/img/image/yu.jpg" alt="京东" >--%>
         <b></b>
     </div>
-    <a href="//surveys.jd.com/index.php?r=survey/index/sid/568245/lang/zh-Hans" target="_blank" class="q-link"><b></b>登录页面，调查问卷</a>
 </div>
 <div id="content">
-    <div class="tips-wrapper" >
+    <div class="tips-wrapper" style="background-color: ghostwhite"  >
         <div class="tips-inner">
             <div class="cont-wrapper"><i class="icon-tips"></i>
                 <p>依据《网络安全法》，为保障您的账户安全和正常使用，请尽快完成手机号验证！
@@ -47,10 +44,10 @@
     <div class="login-wrap">
         <div class="w">
             <div class="login-form">
-                <div class="tips-wrapper" >
+                <div class="tips-wrapper" style="background-color: ghostwhite">
                     <div class="tips-inner">
                         <div class="cont-wrapper"><i class="icon-tips"></i>
-                            <p>好如家不会以任何理由要求您转账汇款，谨防诈骗。</p></div>
+                            <p>豫予不会以任何理由要求您转账汇款，谨防诈骗。</p></div>
                     </div>
                 </div>
                 <%--<div class="login-tab login-tab-l">--%>
@@ -200,7 +197,7 @@
                 </div>
             </div>
         </div>
-        <div class="login-banner"  style="background: url(//img30.360buyimg.com/da/jfs/t1/99179/16/14156/48602/5e61be92E160987d6/1629350ce8b992f7.png) 0px 0px no-repeat;background-color: #ef6868" clstag="pageclick|keycount|20150112ABD|46">
+        <div class="login-banner"  style="background: url('/img/image/login.jpg')" clstag="pageclick|keycount|20150112ABD|46">
             <div class="w">
                 <div id="banner-bg"  class="i-inner"
                 >
@@ -210,54 +207,6 @@
     </div>
 </div>
 <div class="w">
-    <div id="footer-2013">
-        <div class="links">
-            <a rel="nofollow" target="_blank" href="//about.jd.com/">
-                关于我们
-            </a>
-            |
-            <a rel="nofollow" target="_blank" href="//www.jd.com/contact/">
-                联系我们
-            </a>
-            |
-            <a rel="nofollow" target="_blank" href="//zhaopin.jd.com/">
-                人才招聘
-            </a>
-            |
-            <a rel="nofollow" target="_blank" href="//lai.jd.com/">
-                商家入驻
-            </a>
-            |
-            <a rel="nofollow" target="_blank" href="//jzt.jd.com/">
-                广告服务
-            </a>
-            |
-            <a rel="nofollow" target="_blank" href="//app.jd.com/">
-                手机京东
-            </a>
-            |
-            <a target="_blank" href="//club.jd.com/links.aspx">
-                友情链接
-            </a>
-            |
-            <a target="_blank" href="//media.jd.com/">
-                销售联盟
-            </a>
-            |
-            <a href="//pro.jd.com/mall/active/3WA2zN8wkwc9fL9TxAJXHh5Nj79u/index.html" target="_blank">
-                京东社区
-            </a>
-            |
-            <a href="//gongyi.jd.com" target="_blank">
-                京东公益
-            </a>
-            |
-            <a target="_blank" href="//www.joybuy.com/" clstag="pageclick|keycount|20150112ABD|9">English Site</a>
-        </div>
-        <div class="copyright">
-            Copyright&nbsp;&copy;&nbsp;2004-2020&nbsp;&nbsp;京东JD.com&nbsp;版权所有
-        </div>
-    </div>
 </div>
 <script type="text/javascript" src="//misc.360buyimg.com/jdf/1.0.0/unit/base/1.0.0/base.js"></script>
 <script type="text/javascript" src="/new/js/jdJsencrypt.min.js"></script>
@@ -272,7 +221,7 @@
             if(obj.flag == 1){
                 $("#msg").html(obj.msg).css({"color": "red","font-size":"15px"});
             }else {
-                window.location.href = "/pages/before/main.jsp"
+                window.location.href = "/before/main";
             }
         })
     }

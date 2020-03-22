@@ -1,7 +1,7 @@
 package com.rich.controller;
-
 import com.rich.pojo.BuyCar;
 import com.rich.pojo.Goods;
+import com.rich.pojo.OrderInfo;
 import com.rich.pojo.SystemUser;
 import com.rich.service.LoginService;
 import com.rich.util.FastDFSClient;
@@ -34,9 +34,19 @@ public class LoginController {
      * @return
      */
     @RequestMapping("main")
-    public String selectAll(Model model) {
-        List<Goods> list = loginService.selectAllGoods();
+    public String selectAll(Goods goods,Model model,HttpServletRequest request) {
+        String areaCity = "郑州市";
+        if(null != goods.getArea()){
+            request.getSession().setAttribute("area",goods.getArea());
+        }else{
+            goods.setArea(areaCity);
+            request.getSession().setAttribute("area",areaCity);
+        }
+        List<Goods> list = loginService.selectAllGoods(goods);
+        List<Goods> areaList = loginService.selectAllArea();
         model.addAttribute("list",list);
+        model.addAttribute("areaList",areaList);
+        model.addAttribute("name",goods.getName());
         return "pages/before/main";
     }
 
@@ -61,8 +71,31 @@ public class LoginController {
      */
     @RequestMapping("goodsDetail")
     public String goodsDetail(Goods goods,Model model) {
+        List<Goods> areaList = loginService.selectAllArea();
+        model.addAttribute("areaList",areaList);
         model.addAttribute("po",goods);
         return "pages/before/productDetails";
+    }
+
+    /***
+     * 购物车结算
+     * @param orderInfo
+     * @param model
+     * @return
+     */
+    @RequestMapping("settle")
+    public String settle(OrderInfo orderInfo, Model model,HttpServletRequest request) {
+        SystemUser systemUser = (SystemUser) request.getSession().getAttribute("user");
+        int i = loginService.settleOrderInfo(orderInfo,request);
+        //查询订单列表信息
+        BuyCar record = new BuyCar();
+        record.setUserId(systemUser.getId());
+        List<BuyCarInfo> list = loginService.selectOrderInfo(record);
+        List<Goods> areaList = loginService.selectAllArea();
+        model.addAttribute("areaList",areaList);
+        //计算购物车总金额
+        model.addAttribute("list",list);
+        return "pages/before/buyOrderSelf";
     }
 
     /***
@@ -74,8 +107,70 @@ public class LoginController {
     @RequestMapping("addBuyCar")
     public String addBuyCar(BuyCar buyCar, Model model) {
         loginService.insertBuyCar(buyCar);
+        //查询购物车列表信息
         List<BuyCarInfo> list = loginService.selectBuyCarInfo(buyCar);
+        //计算购物车总金额
+        String price = loginService.selectAllPrice(list);
+        List<Goods> areaList = loginService.selectAllArea();
+        model.addAttribute("areaList",areaList);
         model.addAttribute("list",list);
+        model.addAttribute("price",price);
+        return "pages/before/buyCarSelf";
+    }
+
+    /***
+     * 查看购物车详情
+     * @param buyCar
+     * @param model
+     * @return
+     */
+    @RequestMapping("selectMySelfBuyCarInfo")
+    public String selectMySelfBuyCarInfo(BuyCar buyCar, Model model) {
+        //查询购物车列表信息
+        List<BuyCarInfo> list = loginService.selectBuyCarInfo(buyCar);
+        //计算购物车总金额
+        String price = loginService.selectAllPrice(list);
+        List<Goods> areaList = loginService.selectAllArea();
+        model.addAttribute("areaList",areaList);
+        model.addAttribute("list",list);
+        model.addAttribute("price",price);
+        return "pages/before/buyCarSelf";
+    }
+
+    /***
+     * 查看订单详情
+     * @param buyCar
+     * @param model
+     * @return
+     */
+    @RequestMapping("selectMySelfOrderInfo")
+    public String selectMySelfOrderInfo(BuyCar buyCar, Model model) {
+        //查询购物车列表信息
+        List<BuyCarInfo> list = loginService.selectOrderInfo(buyCar);
+        List<Goods> areaList = loginService.selectAllArea();
+        model.addAttribute("areaList",areaList);
+        model.addAttribute("list",list);
+        return "pages/before/buyOrderSelf";
+    }
+
+    /***
+     * 删除购物车商品信息
+     * @param id
+     * @param model
+     * @return
+     */
+    @RequestMapping("deleteBuyCar")
+    public String deleteBuyCar(int id, Model model,HttpServletRequest request) {
+        SystemUser systemUser = (SystemUser) request.getSession().getAttribute("user");
+        loginService.deleteBuyCar(id);
+        BuyCar buyCar =new BuyCar();
+        buyCar.setUserId(systemUser.getId());
+        //查询购物车列表信息
+        List<BuyCarInfo> list = loginService.selectBuyCarInfo(buyCar);
+        //计算购物车总金额
+        String price = loginService.selectAllPrice(list);
+        model.addAttribute("list",list);
+        model.addAttribute("price",price);
         return "pages/before/buyCarSelf";
     }
 

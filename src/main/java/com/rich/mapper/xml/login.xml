@@ -27,7 +27,19 @@
     </update>
 
     <select id="selectAllGoodsInfo" resultType="com.rich.pojo.Goods">
-        select * from goods
+        select * from goods g
+        <where>
+            <if test="name != null and name != ''">
+                and g.name like CONCAT('%',#{name},'%')
+            </if>
+            <if test="area != null and area != ''">
+                and g.area = #{area}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectCityInfo" resultType="com.rich.pojo.Goods">
+        select area from goods group by area
     </select>
 
     <insert id="insertBuyCar">
@@ -38,8 +50,37 @@
     </insert>
 
     <select id="selectBuyCarInfo" resultType="com.rich.vo.BuyCarInfo">
-        select g.name goodsName,g.img img,g.price price,b.num num from buy_car b
-        left join goods g on g.id =b.goods_id where b.user_id = #{userId}
+        select b.order_id orderId,b.id id,g.name goodsName,g.img img,g.price price,b.num num from buy_car b
+        left join goods g on g.id =b.goods_id where b.user_id = #{userId} and order_id is null
     </select>
+
+    <select id="selectOrderInfo" resultType="com.rich.vo.BuyCarInfo">
+        select b.order_id orderId,b.id id,g.name goodsName,g.img img,g.price price,b.num num from buy_car b
+        left join goods g on g.id =b.goods_id where b.user_id = #{userId} and order_id is not null
+    </select>
+
+    <delete id="deleteBuyCar">
+        DELETE from buy_car where id = #{id}
+    </delete>
+
+    <insert id="insertOrderInfo" useGeneratedKeys="true" keyProperty="id" >
+        insert into order_info
+        (goods_id, num, address_info_id, orderCode, orderStatus, price)
+        VALUES
+        (#{goodsId} ,#{num} ,#{addressInfoId}  ,#{orderCode} ,#{orderStatus} ,#{price}  )
+
+    </insert>
+
+    <update id="updateBatchList" parameterType="list" >
+        <foreach collection="list" item="item" separator=";">
+            update buy_car
+            <set>
+                <if test="item.orderId != 0">
+                    order_id = #{item.orderId},
+                </if>
+            </set>
+            where id = #{item.id} and order_id is null
+        </foreach>
+    </update>
 
 </mapper>
