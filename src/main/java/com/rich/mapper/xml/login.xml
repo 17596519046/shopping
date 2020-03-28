@@ -114,7 +114,14 @@
         left join goods g on g.id =b.goods_id
         LEFT join order_info o on b.order_id = o.id
         LEFT JOIN address_info ai on ai.id = o.address_info_id
-        where b.user_id = #{userId} and order_id is not null and o.orderStatus = 1
+        where b.user_id = #{userId} and order_id is not null and o.orderStatus != 2
+    </select>
+
+    <select id="selectOrderGoodsInfo" resultType="com.rich.pojo.OrderGoods">
+       select g.*,b.num buyNum from order_info o
+       left join buy_car b on o.id = b.order_id
+       left join goods g on g.id = o.goods_id
+       where o.id = #{id}
     </select>
 
     <delete id="deleteBuyCar">

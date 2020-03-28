@@ -181,6 +181,11 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
+    public List<OrderGoods> selectOrderGoods(OrderInfo orderInfo) {
+        return loginMapper.selectOrderGoodsInfo(orderInfo);
+    }
+
+    @Override
     public List<BuyCarInfo> selectOrderInfo(BuyCar buyCar) {
         return loginMapper.selectOrderInfo(buyCar);
     }

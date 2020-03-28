@@ -47,6 +47,8 @@ public interface LoginMapper {
 
     List<BuyCarInfo> selectOrderInfo(BuyCar buyCar);
 
+    List<OrderGoods> selectOrderGoodsInfo(OrderInfo orderInfo);
+
     int deleteBuyCar(int id);
 
     int insertOrderInfo(OrderInfo orderInfo);

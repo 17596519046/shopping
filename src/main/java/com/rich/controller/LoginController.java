@@ -302,6 +302,19 @@ public class LoginController {
     }
 
     /***
+     * 查询看订单下面的商品
+     * @return
+     */
+    @RequestMapping("selectOrderGoodsInfo")
+    @ResponseBody
+    public Map selectOrderGoodsInfo(OrderInfo orderInfo) {
+        HashMap map = new HashMap();
+        List<OrderGoods> list = loginService.selectOrderGoods(orderInfo);
+        map.put("data",list);
+        return map;
+    }
+
+    /***
      * 修改个人信息
      * @param systemUser
      * @return

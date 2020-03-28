@@ -42,6 +42,8 @@ public interface LoginService {
 
     List<BuyCarInfo> selectBuyCarInfo(BuyCar buyCar);
 
+    List<OrderGoods> selectOrderGoods(OrderInfo orderInfo);
+
     List<BuyCarInfo> selectOrderInfo(BuyCar buyCar);
 
     String selectAllPrice(List<BuyCarInfo> list);
