@@ -46,7 +46,7 @@ public class OrderInfoVO {
      *下单时间
      */
     @JsonFormat(timezone="GMT+8", pattern="yyyy-MM-dd HH:mm:ss")
-    private String	createTime;
+    private String	cretateTime;
     /**
      * 数量
      */

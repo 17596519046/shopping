@@ -80,4 +80,26 @@
         UPDATE goods SET num = num - #{num} WHERE id = #{gsId}
     </update>
 
+    <select id="getAllGoods" resultType="com.rich.pojo.Goods">
+        select  * from goods order by id desc
+    </select>
+    <select id="getAllGoods1" resultType="com.rich.pojo.Goods">
+        select  * from goods
+        where 1 = 1
+        AND name like CONCAT('%', #{name}, '%')
+        order by id desc
+    </select>
+
+    <insert id="addGoods">
+        INSERT INTO goods ( name, price, detail, num, img, area )
+        VALUES
+        (#{name}, #{price}, #{detail}, #{num}, #{img}, #{area});
+    </insert>
+    <insert id="deleteGoods">
+        delete from goods where id = #{goodsId}
+    </insert>
+    <insert id="updateGoods">
+        update goods set name = #{name},price = #{price},detail = #{detail},num = #{num},img = #{img},area = #{area} where id = #{id}
+    </insert>
+
 </mapper>

@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,33 +32,33 @@
     <template>
 
         <el-button v-if="isShow" @click="addGoos">添加商品</el-button>
+        <el-input style="width:300px"  v-if="isShow" v-model="findText" placeholder="请输入搜索内容"></el-input>
+        <el-button v-if="isShow" @click="findGoods">搜索</el-button>
         <el-table
                 :data="tableData"
                 border
-                height="800px"
+                height="700px"
                 style="width: 100%" v-if="isShow">
             <el-table-column
-                    prop="userName"
-                    label="姓名"
+                    prop="name"
+                    label="商品名称"
                     width="180">
             </el-table-column>
             <el-table-column
-                    prop="email"
-                    label="邮箱">
+                    prop="price"
+                    label="价格">
             </el-table-column>
             <el-table-column
-                    prop="phone"
-                    label="手机">
+                    prop="area"
+                    label="城市">
             </el-table-column>
             <el-table-column
-                    prop="createTime"
-                    label="创建时间"
-                    width="180">
+                    prop="num"
+                    label="库存">
             </el-table-column>
             <el-table-column
-                    prop="roleName"
-                    label="角色"
-                    width="180">
+                    prop="detail"
+                    label="详情">
             </el-table-column>
             <el-table-column
                     fixed="right"
@@ -73,30 +74,40 @@
         </el-table>
 
         <el-form :model="ruleForm" status-icon ref="ruleForm" label-width="100px" class="demo-ruleForm" v-if="!isShow">
-            <el-form-item label="姓名" prop="userName">
-                <el-input type="userName" v-model="ruleForm.userName" autocomplete="off"></el-input>
+            <el-form-item label="商品名称" prop="name">
+                <el-input type="name" v-model="ruleForm.name" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item label="id" prop="id" v-if="false">
                 <el-input type="id" v-model="ruleForm.id" autocomplete="off"></el-input>
             </el-form-item>
-            <el-form-item label="密码" prop="password">
-                <el-input type="password" v-model="ruleForm.password" autocomplete="off"></el-input>
+            <el-form-item label="价格" prop="price">
+                <el-input type="price" v-model="ruleForm.price" autocomplete="off"></el-input>
             </el-form-item>
-            <el-form-item label="邮箱" prop="email">
-                <el-input v-model="ruleForm.email"></el-input>
+            <el-form-item label="城市" prop="area">
+                <el-input type="area"  v-model="ruleForm.area"></el-input>
             </el-form-item>
-            <el-form-item label="手机号" prop="phone">
-                <el-input v-model.number="ruleForm.phone"></el-input>
+            <el-form-item label="库存" prop="num">
+                <el-input v-model.number="ruleForm.num"></el-input>
             </el-form-item>
-            <el-form-item label="手机号" prop="phone">
-                <el-select v-model="value" placeholder="角色">
-                    <el-option
-                            v-for="item in options"
-                            :key="item.value"
-                            :label="item.label"
-                            :value="item.value">
-                    </el-option>
-                </el-select>
+            <el-form-item label="详情" prop="detail">
+                <el-input
+                        type="textarea"
+                        :rows="4"
+                        placeholder="请输入内容"
+                        v-model="ruleForm.detail">
+                </el-input>
+            </el-form-item>
+            <el-form-item label="图片" prop="img">
+                <el-upload
+                        class="avatar-uploader"
+                        name="file"
+                        action="/before/upload"
+                        :show-file-list="false"
+                        :on-success="handleAvatarSuccess"
+                        :before-upload="beforeAvatarUpload">
+                    <img v-if="imageUrl" src="ruleForm.img" class="avatar">
+                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                </el-upload>
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="submitForm(ruleForm)">提交</el-button>
@@ -118,27 +129,35 @@
                 tableData: [],
                 isShow: true,
                 ruleForm: {
-                    userName: '',
-                    password: '',
-                    email: '',
-                    phone: '',
-                    roleId: 2
+                    name: '',
+                    price: '0.00',
+                    detail: '',
+                    area: '',
+                    num: 0,
+                    id: 0,
+                    img: ''
                 },
-                options: [{
-                    value: 1,
-                    label: '超级管理员'
-                }, {
-                    value: 2,
-                    label: '普通管理员'
-                }],
-                value: ''
+                value: '',
+                findText: '',
+                imageUrl: ''
             };
         },
         methods: {
-            getArticle: function () {
+            getAllGoods: function () {
                 var that = this;
                 var param = new URLSearchParams();
-                axios.get('/back/selectSystemUserList', param).then(function (result) {
+                axios.get('/goods/getAllGoods', param).then(function (result) {
+                    var obj = JSON.parse(JSON.stringify(result));
+                    var json = obj.data;
+                    that.tableData = json;
+                });
+            },
+            findGoods() {
+                var that = this;
+                var param = new URLSearchParams();
+                param.append('name', that.findText);
+                console.log(that.findText);
+                axios.post('/goods/getAllGoods', param).then(function (result) {
                     var obj = JSON.parse(JSON.stringify(result));
                     var json = obj.data;
                     that.tableData = json;
@@ -147,14 +166,14 @@
             deleteClick(row) {
                 var that = this;
                 var param = new URLSearchParams();
-                param.append('userId', row.id)
-                axios.post('/back/deleteUser', param).then(function (result) {
+                param.append('goodsId', row.id)
+                axios.post('/goods/deleteGoods', param).then(function (result) {
                     that.$message({
                         message: '删除成功',
                         center: true
                     });
                 });
-                this.getArticle();
+                this.getAllGoods();
             },
             editItem(row) {
                 var that = this;
@@ -174,31 +193,73 @@
                 } else {
                     param.append("id",formName.id);
                 }
-                param.append("userName", formName.userName);
-                param.append("password", formName.password);
-                param.append("email", formName.email);
-                param.append("phone", formName.phone);
-                param.append("roleId", that.value);
-                axios.post('/back/updateSystemUser', param).then(function (result) {
+                param.append("name", formName.name);
+                param.append("price", formName.price);
+                param.append("detail", formName.detail);
+                param.append("area", formName.area);
+                param.append("num", formName.num);
+                param.append("img", formName.img);
+                axios.post('/goods/addGoods', param).then(function (result) {
                     that.$message({
                         message: '成功',
                         center: true
                     });
                 });
-                formName.userName = '';
+                formName.price = '0.00';
+                formName.name = '';
+                formName.detail = '';
+                formName.area = '';
+                formName.num = 0;
+                formName.img = '';
                 formName.id = 0;
-                formName.password = '';
-                formName.email = '';
-                formName.phone = '';
                 that.isShow = true;
-                this.getArticle();
+                this.getAllGoods();
             },
+            handleAvatarSuccess(res, file) {
+                this.imageUrl = URL.createObjectURL(file.raw);
+            },
+            beforeAvatarUpload(file) {
+                const isJPG = file.type === 'image/jpeg';
+                const isLt2M = file.size / 1024 / 1024 < 2;
+
+                if (!isJPG) {
+                    this.$message.error('上传头像图片只能是 JPG 格式!');
+                }
+                if (!isLt2M) {
+                    this.$message.error('上传头像图片大小不能超过 2MB!');
+                }
+                return isJPG && isLt2M;
+            }
         },
         created: function () {
-            this.getArticle();
+            this.getAllGoods();
         }
     })
 </script>
 
-
+<style>
+    .avatar-uploader .el-upload {
+        border: 1px dashed #d9d9d9;
+        border-radius: 6px;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
+    .avatar-uploader .el-upload:hover {
+        border-color: #409EFF;
+    }
+    .avatar-uploader-icon {
+        font-size: 28px;
+        color: #8c939d;
+        width: 178px;
+        height: 178px;
+        line-height: 178px;
+        text-align: center;
+    }
+    .avatar {
+        width: 178px;
+        height: 178px;
+        display: block;
+    }
+</style>
 </html>

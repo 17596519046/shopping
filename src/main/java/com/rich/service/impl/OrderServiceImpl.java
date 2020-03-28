@@ -1,13 +1,19 @@
 package com.rich.service.impl;
 
+import com.alibaba.druid.sql.visitor.functions.Now;
+import com.mysql.jdbc.StringUtils;
 import com.rich.mapper.OrderMapper;
+import com.rich.pojo.Goods;
 import com.rich.pojo.OrderInfo;
 import com.rich.service.OrderService;
 import com.rich.vo.OrderInfoVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -68,6 +74,33 @@ public class OrderServiceImpl implements OrderService {
             // 减去订单数量
             orderMapper.updateGoodsNum(orderInfoVO.getGsId(), orderInfoVO.getNum());
         }
+    }
+
+    @Override
+    public List<Goods> getAllGoods(String name) {
+        List<Goods> list = new ArrayList<>();
+        // 如果传的参数为空，说明查询全部，如果不为空说明模糊搜索
+        if (name == null || "".equals(name)) {
+            list = orderMapper.getAllGoods();
+        } else {
+            list = orderMapper.getAllGoods1(name);
+        }
+        return list;
+    }
+
+    @Override
+    public void addGoods(Goods goods) {
+        orderMapper.addGoods(goods);
+    }
+
+    @Override
+    public void deleteGoods(Integer goodsId) {
+        orderMapper.deleteGoods(goodsId);
+    }
+
+    @Override
+    public void updateGoods(Goods goods) {
+        orderMapper.updateGoods(goods);
     }
 
 

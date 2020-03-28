@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -36,7 +37,7 @@
         <el-table
                 :data="tableData1"
                 border
-                height="900px"
+                height="700px"
                 max-height="1000px"
                 style="width: 100%;">
             <el-table-column
@@ -64,7 +65,7 @@
                     label="数量">
             </el-table-column>
             <el-table-column
-                    prop="createTime"
+                    prop="cretateTime"
                     label="下单时间">
             </el-table-column>
             <el-table-column

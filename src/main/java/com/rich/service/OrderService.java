@@ -1,8 +1,10 @@
 package com.rich.service;
 
+import com.rich.pojo.Goods;
 import com.rich.pojo.OrderInfo;
 import com.rich.vo.OrderInfoVO;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -18,4 +20,12 @@ public interface OrderService {
     List<OrderInfoVO> getAllOrder(int isAll);
 
     void updateStatus(Integer orderId, Integer orderStatus);
+
+    List<Goods> getAllGoods(String name);
+
+    void addGoods(Goods goods);
+
+    void deleteGoods(Integer goodsId);
+
+    void updateGoods(Goods goods);
 }

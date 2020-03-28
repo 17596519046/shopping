@@ -130,10 +130,13 @@ public class BackController {
         List<SystemUser> userList = backService.selectSystemUserList();
         for (SystemUser systemUser : userList) {
             if (systemUser.getRoleId() == 1) {
-                systemUser.setRoleName("管理员");
+                systemUser.setRoleName("超级管理员");
             }
-            if (systemUser.getRoleId() == 0) {
+            if (systemUser.getRoleId() == 2) {
                 systemUser.setRoleName("普通管理员");
+            }
+            if (systemUser.getRoleId() == 3) {
+                systemUser.setRoleName("普通用户");
             }
         }
         model.addAttribute("userList",userList);

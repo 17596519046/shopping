@@ -1,5 +1,6 @@
 package com.rich.mapper;
 
+import com.rich.pojo.Goods;
 import com.rich.vo.OrderInfoVO;
 import org.apache.ibatis.annotations.Param;
 
@@ -24,4 +25,14 @@ public interface OrderMapper {
     OrderInfoVO getOneOrder(Integer orderId);
 
     void updateGoodsNum(@Param("gsId") int gsId, @Param("num") Integer num);
+
+    List<Goods> getAllGoods();
+
+    void addGoods(Goods goods);
+
+    void deleteGoods(Integer goodsId);
+
+    void updateGoods(Goods goods);
+
+    List<Goods> getAllGoods1(String name);
 }

@@ -68,6 +68,7 @@ public class LoginServiceImpl implements LoginService {
         Date date = new Date();
         systemUser.setCreateTime(date);
         systemUser.setUpdateTime(date);
+        systemUser.setRoleId(3);
         return loginMapper.insertInfo(systemUser);
     }
 

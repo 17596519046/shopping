@@ -31,6 +31,9 @@ public class BackServiceImpl implements BackService {
         if (sys == null){
             return false;
         }
+        if (sys.getRoleId() == 3) {
+            return false;
+        }
         request.getSession().setAttribute("systemUser",sys);
         return true;
     }
