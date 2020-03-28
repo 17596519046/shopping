@@ -13,12 +13,17 @@
     String name = request.getParameter("name");
     String detail = request.getParameter("detail");
     String img = request.getParameter("img");
+    String goodsNum = request.getParameter("num");
     String price = request.getParameter("price");
     String id = request.getParameter("id");
     SystemUser user = (SystemUser) request.getSession().getAttribute("user");
     int userId = 0;
+    int num = 0;
     if (null != user) {
         userId = user.getId();
+    }
+    if(null != goodsNum){
+        num = Integer.valueOf(goodsNum);
     }
 %>
 <html>
@@ -243,6 +248,7 @@
         <div class="itemInfo-wrap">
             <input id="goodsId" type="hidden" value="<%=id%>">
             <input id="userId" type="hidden" value="<%=userId%>">
+            <input id="goodsNum" type="hidden" value="<%=num%>">
             <div class="sku-name">
                 <%=name%>
             </div>
@@ -345,6 +351,11 @@
 
                             function add() {
                                 var number = $("#buy-num").val();
+                                var goodsNum = $("#goodsNum").val();
+                                if(number >= goodsNum){
+                                    alert('该商品库存不足');
+                                    return false
+                                }
                                 var num = parseInt(number) + parseInt(1);
                                 $("#buy-num").val(num);
                             }
@@ -363,6 +374,10 @@
                 <div id="choose-btns" class="choose-btns clearfix">
                     <font style="font-weight: bold;font-size: 15px;font-family: 'Arial Black'">商品详情：</font>
                     <span style="font-weight: bold;font-size: 15px;font-family: 'Arial Black'"><%=detail%></span>
+                </div>
+                <div id="choose-btns" class="choose-btns clearfix">
+                    <font style="font-weight: bold;font-size: 15px;font-family: 'Arial Black'">库存数量：</font>
+                    <span style="font-weight: bold;font-size: 15px;font-family: 'Arial Black'"><%=num%></span>
                 </div>
                 <div id="summary-tips" class="summary-tips" clstag="shangpin|keycount|product|wenxintishi_2" style="">
                     <div class="dt">温馨提示</div>

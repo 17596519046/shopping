@@ -212,6 +212,7 @@
                             <input name="detail" value="${po.detail}" type="hidden">
                             <input name="price" value="${po.price}" type="hidden">
                             <input name="id" value="${po.id}" type="hidden">
+                            <input name="num" value="${po.num}" type="hidden">
                             <li style="background-color: white" class="more2_item more2_item_good hover-on"><a
                                     class="more2_lk"
                                     href="#" onclick="submit('${po.id}')"
