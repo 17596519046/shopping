@@ -42,28 +42,33 @@
             <el-table-column
                     prop="name"
                     label="商品名称"
-                    width="180">
+                    min-width="15%">
             </el-table-column>
             <el-table-column
                     prop="price"
-                    label="价格">
+                    label="价格"
+                    min-width="7%">
             </el-table-column>
             <el-table-column
                     prop="area"
-                    label="城市">
+                    label="城市"
+                    min-width="8%">
             </el-table-column>
             <el-table-column
                     prop="num"
-                    label="库存">
+                    label="库存"
+                    min-width="10%">
             </el-table-column>
             <el-table-column
                     prop="detail"
-                    label="详情">
+                    label="详情"
+                    min-width="45%"
+                    show-overflow-tooltip="38%">
             </el-table-column>
             <el-table-column
                     fixed="right"
                     label="操作"
-                    width="100">
+                    min-width="15%">
                 <template slot-scope="scope">
                     <el-button type="text" size="small" @click="editItem(scope.row)">编辑</el-button>
                     <el-button @click="deleteClick(scope.row)" type="text" size="small" :plain="true">

@@ -307,11 +307,10 @@ public class LoginController {
      */
     @RequestMapping("selectOrderGoodsInfo")
     @ResponseBody
-    public Map selectOrderGoodsInfo(OrderInfo orderInfo) {
+    public List<OrderGoods> selectOrderGoodsInfo(OrderInfo orderInfo) {
         HashMap map = new HashMap();
         List<OrderGoods> list = loginService.selectOrderGoods(orderInfo);
-        map.put("data",list);
-        return map;
+        return list;
     }
 
     /***

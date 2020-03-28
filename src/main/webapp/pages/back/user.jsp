@@ -35,6 +35,7 @@
         <el-table
                 :data="tableData"
                 border
+                height="700px"
                 style="width: 100%" v-if="isShow">
             <el-table-column
                     prop="userName"

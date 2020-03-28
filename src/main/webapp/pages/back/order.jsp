@@ -30,7 +30,7 @@
 <body>
 <div id="app">
     <template>
-
+        <el-button @click="getAllOrder(0)">全部订单</el-button>
         <el-button @click="getAllOrder(1)">已下单</el-button>
         <el-button @click="getAllOrder(2)">取消订单</el-button>
         <el-button @click="getAllOrder(4)">已发货</el-button>
@@ -39,6 +39,7 @@
                 border
                 height="700px"
                 max-height="1000px"
+                v-if="isShow1"
                 style="width: 100%;">
             <el-table-column
                     prop="id"
@@ -49,52 +50,89 @@
             <el-table-column
                     prop="username"
                     label="姓名"
-                    width="180">
+                    min-width="10%">
             </el-table-column>
             <el-table-column
                     prop="receivePhone"
                     label="手机号"
-                    width="180">
-            </el-table-column>
-            <el-table-column
-                    prop="name"
-                    label="商品">
-            </el-table-column>
-            <el-table-column
-                    prop="num"
-                    label="数量">
+                    min-width="10%">
             </el-table-column>
             <el-table-column
                     prop="cretateTime"
-                    label="下单时间">
+                    label="下单时间"
+                    min-width="15%">
             </el-table-column>
             <el-table-column
                     prop="orderStatusStr"
                     label="订单状态"
-                    width="180">
+                    min-width="10%">
             </el-table-column>
             <el-table-column
                     prop="address"
                     label="下单地址"
-                    width="180">
+                    min-width="35%">
             </el-table-column>
             <el-table-column
                     prop="orderCode"
                     label="订单号"
-                    width="180">
+                    min-width="15%">
             </el-table-column>
             <el-table-column
                     fixed="right"
                     label="操作"
-                    width="100">
+                    min-width="10%">
                 <template slot-scope="scope">
-                    <el-button type="text" size="small" @click="update4(scope.row)">发货</el-button>
+                    <el-button type="text" v-if="isShow1" size="small" @click="see(scope.row)">查看</el-button>
+                    <el-button type="text" v-if="isShow" size="small" @click="update4(scope.row)">发货</el-button>
                     <el-button @click="update3(scope.row)" type="text" size="small" :plain="true">
                         删除
                     </el-button>
                 </template>
             </el-table-column>
         </el-table>
+
+
+        <el-table
+                :data="tableData2"
+                border
+                height="700px"
+                max-height="1000px"
+                v-if="!isShow1"
+                style="width: 100%;">
+            <el-table-column
+                    prop="id"
+                    label="id"
+                    v-if="false"
+                    min-width="10%">
+            </el-table-column>
+            <el-table-column
+                    prop="name"
+                    label="商品名称"
+                    min-width="10%">
+            </el-table-column>
+            <el-table-column
+                    prop="price"
+                    label="价格"
+                    min-width="10%">
+            </el-table-column>
+            <el-table-column
+                    prop="detail"
+                    label="商品详情"
+                    min-width="50%"
+                    show-overflow-tooltip="700px">
+            </el-table-column>
+            <el-table-column
+                    prop="area"
+                    label="城市"
+                    min-width="10%">
+            </el-table-column>
+            <el-table-column
+                    prop="buyNum"
+                    label="数量"
+                    min-width="10%">
+            </el-table-column>
+        </el-table>
+
 
     </template>
 </div>
@@ -109,13 +147,22 @@
         data() {
             return {
                 tableData1: [],
+                tableData2: [],
+                isShow: false,
+                isShow1: true,
             };
         },
         methods: {
             getAllOrder: function (num) {
                 var that = this;
+                if (num == 1) {
+                    that.isShow = true;
+                } else {
+                    that.isShow = false;
+                }
+                that.isShow1 = true;
                 var param = new URLSearchParams();
-                param.append("isAll", num)
+                param.append("isAll", num);
                 axios.post('/order/getAllOrder', param).then(function (result) {
                     var obj = JSON.parse(JSON.stringify(result));
                     var json = obj.data;
@@ -148,6 +195,17 @@
                 });
                 this.getAllOrder(0);
             },
+            see(row) {
+                var that = this;
+                that.isShow1 = false;
+                var param = new URLSearchParams();
+                param.append('id', row.id);
+                axios.post('/before/selectOrderGoodsInfo', param).then(function (result) {
+                    var obj = JSON.parse(JSON.stringify(result));
+                    var json = obj.data;
+                    that.tableData2 = json;
+                });
+            }
         },
         created: function () {
             this.getAllOrder(0);
