@@ -214,6 +214,18 @@ public class LoginController {
     }
 
     /***
+     * 取消订单
+     * @param systemUser
+     * @return
+     */
+    @RequestMapping("cancelOrder")
+    @ResponseBody
+    public String cancelOrder(Model model,SystemUser systemUser) {
+        loginService.cancelOrder(systemUser);
+        return "";
+    }
+
+    /***
      * 添加评价内容
      * @param evaluateInner
      * @return

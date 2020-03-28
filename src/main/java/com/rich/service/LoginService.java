@@ -14,6 +14,8 @@ public interface LoginService {
 
     List<EvaluateInnerVO> selectListEvaluate(EvaluateInner evaluateInner);
 
+    int cancelOrder(SystemUser systemUser);
+
     int insertInfo(SystemUser systemUser);
 
     int insertAddressInfo(AddressInfo addressInfo);

@@ -59,6 +59,16 @@ public class LoginServiceImpl implements LoginService {
     }
 
     /***
+     * 取消订单
+     * @param systemUser
+     * @return
+     */
+    @Override
+    public int cancelOrder(SystemUser systemUser) {
+        return loginMapper.cancelOrder(systemUser);
+    }
+
+    /***
      * 新增用户
      * @param systemUser
      * @return

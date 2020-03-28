@@ -23,6 +23,13 @@
         where goods_id = #{goodsId}
     </select>
 
+    <update id="cancelOrder">
+        	update buy_car b
+    left join
+        order_info o
+            on b.order_id = o.id set o.orderStatus = 2 where b.user_id = #{id}
+    </update>
+
     <select id="selectInfo" resultType="com.rich.pojo.SystemUser">
         select * from system_user
         where user_name = #{userName}
@@ -30,8 +37,8 @@
 
     <insert id="insertInfo">
         INSERT INTO system_user
-         (user_name,password,phone,email,create_time,update_time,role_id) VALUES
-         (#{userName} ,#{password} ,#{phone} ,#{email} ,#{createTime} ,#{updateTime} ,#{roleId} )
+         (user_name,password,phone,email,create_time,update_time,role_id,status) VALUES
+         (#{userName} ,#{password} ,#{phone} ,#{email} ,#{createTime} ,#{updateTime} ,#{roleId},0 )
     </insert>
 
     <insert id="insertAddressInfo">
@@ -107,14 +114,14 @@
         left join goods g on g.id =b.goods_id
         LEFT join order_info o on b.order_id = o.id
         LEFT JOIN address_info ai on ai.id = o.address_info_id
-        where b.user_id = #{userId} and order_id is not null
+        where b.user_id = #{userId} and order_id is not null and o.orderStatus = 1
     </select>
 
     <delete id="deleteBuyCar">
         DELETE from buy_car where id = #{id}
     </delete>
 
-    <insert id="insertOrderInfo" useGeneratedKeys="true" keyProperty="id" >
+    <insert id="insertOrderInfo" useGeneratedKeys="true" keyProperty="id">
         insert into order_info
         (goods_id, num, address_info_id, orderCode, orderStatus, price)
         VALUES
@@ -122,7 +129,7 @@
 
     </insert>
 
-    <update id="updateBatchList" parameterType="list" >
+    <update id="updateBatchList" parameterType="list">
         <foreach collection="list" item="item" separator=";">
             update buy_car
             <set>

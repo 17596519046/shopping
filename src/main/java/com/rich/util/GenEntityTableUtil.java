@@ -20,7 +20,7 @@ public class GenEntityTableUtil {
     private static final String pwd="TestBicon@123";
     private static final String user="root";
     private static final String url = "jdbc:mysql://47.101.145.236:3306/store" + "?user=" + user + "&password=" + pwd + "&useUnicode=true&characterEncoding=UTF-8";
-    private static String tablename = "role_menu";// 表名
+    private static String tablename = "evaluate_inner";// 表名
     private static String setpackage="com.rich.pojo";//你的实体类所在的包的位置
 
     private static Connection getConnection=null;

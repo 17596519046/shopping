@@ -11,6 +11,8 @@ public interface LoginMapper {
 
     List<EvaluateInnerVO> selectEvaluate(EvaluateInner evaluateInner);
 
+    int cancelOrder(SystemUser systemUser);
+
     int selectUserInfo(SystemUser systemUser);
 
     SystemUser selectInfo(SystemUser systemUser);

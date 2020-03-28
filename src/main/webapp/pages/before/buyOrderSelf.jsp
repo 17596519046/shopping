@@ -223,7 +223,16 @@
                 <%--<span class="number">1</span>--%>
             </a>
         </li>
+
     </ul>
+    <button onclick="cancelOrder()" style="background-color: white;margin-left:88%;position: absolute;color: black;width: 60px;height: 30px;border-radius: 5px"> 取消订单</button>
+    <script>
+        function cancelOrder(id,goodsId) {
+            $.post('/before/cancelOrder',{},function (data) {
+                window.location.href = 'selectMySelfOrderInfo';
+            })
+        }
+    </script>
     <div class="clr"></div>
     <div class="w-line">
         <div class="floater" style="width: 79px; left: 0px;"></div>
@@ -362,7 +371,7 @@
                                     <!-- 落地配服务 -->
                                 </div>
                                 <div id="${po.id}evaluate" class="comment-column J-comment-column" style="margin-bottom: 1%;display: none">
-                                    <textarea id="${po.id}inner" style="width: 83%"></textarea>
+                                    <textarea id="${po.id}inner" placeholder="请输入评价内容" style="width: 83%"></textarea>
                                     <button onclick="commit('${po.id}','${po.goodsId}')" style="background-color: #019320;color: white;width: 60px;height: 30px;position: absolute;margin-left: 20px;margin-top:10px;border-radius: 5px">提交</button>
                                 </div>
                                 <div class="item-line"></div>
