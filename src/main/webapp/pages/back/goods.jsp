@@ -105,7 +105,7 @@
                         :show-file-list="false"
                         :on-success="handleAvatarSuccess"
                         :before-upload="beforeAvatarUpload">
-                    <img v-if="imageUrl" src="ruleForm.img" class="avatar">
+                    <img :src="ruleForm.img" class="avatar">
                     <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                 </el-upload>
             </el-form-item>
@@ -198,7 +198,7 @@
                 param.append("detail", formName.detail);
                 param.append("area", formName.area);
                 param.append("num", formName.num);
-                param.append("img", formName.img);
+                param.append("img", this.imageUrl);
                 axios.post('/goods/addGoods', param).then(function (result) {
                     that.$message({
                         message: '成功',
@@ -216,7 +216,10 @@
                 this.getAllGoods();
             },
             handleAvatarSuccess(res, file) {
-                this.imageUrl = URL.createObjectURL(file.raw);
+                this.ruleForm.img = URL.createObjectURL(file.raw);
+                var img = 'http://47.101.145.236'+res
+//                alert(img)
+                this.imageUrl = img;
             },
             beforeAvatarUpload(file) {
                 const isJPG = file.type === 'image/jpeg';
