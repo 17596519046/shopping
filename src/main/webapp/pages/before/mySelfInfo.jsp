@@ -9,7 +9,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Type" content="text/html; charset=gbk">
-    <title>个人注册</title>
+    <title>个人信息</title>
     <link rel="icon" href="/img/image/fav.jpg"/>
     <link type="text/css" rel="stylesheet" href="//misc.360buyimg.com/jdf/1.0.0/unit/??ui-base/1.0.0/ui-base.css">
     <link type="text/css" rel="stylesheet" href="//misc.360buyimg.com/user/reg/3.0.0/css/tinyscrollbar-170524.css">
@@ -32,73 +32,45 @@
     <link charset="utf-8" rel="stylesheet" href="https://misc.360buyimg.com/jdf/1.0.0/ui/dialog/1.0.0/dialog.css">
 </head>
 <body>
-<!-- widget header begin -->
 <div class="header">
     <div class="logo-con w clearfix">
             <a href="#" style="height: 60%;background-image: url('/img/image/yu.jpg');background-size: cover;background-position: 0px -50px"  class="logo ">
         </a>
-        <div class="logo-title">欢迎注册</div>
-
-        <div class="have-account">已有账号？ <a href="login.jsp">请登录&gt;</a>
-        </div>
-
+        <div class="logo-title">个人信息</div>
     </div>
 </div>
 <!-- widget header end -->
 <div class="container w">
 
 
-    <!-- widget progress-bar begin -->
     <div class="progress-bar clearfix">
-        <div class="pro-step cur-step ">
-            <span class="step-index">1</span>
-            <p class="step-desc">填写账号信息</p>
-        </div>
-        <div style="color: #33bb44"  class="pro-line pro-line1 person-pro-line person-pro-line1 "></div>
-        <div class="pro-step pro-step2 person-pro-step2  ">
-            <span id="tagTop"  class="step-index">2</span>
-            <p id="tag"  class="step-desc">注册成功</p>
-        </div>
-        <%--<div class="pro-line pro-line2 person-pro-line person-pro-line2 "></div>--%>
-        <%--<div class="pro-step pro-step3 person-pro-step3  ">--%>
-            <%--<span class="step-index">3</span>--%>
-            <%--<p class="step-desc">注</p>--%>
-        <%--</div>--%>
     </div>
-    <!-- widget progress-bar end -->
-    <!-- widget reg-steps begin -->
     <div class="main ">
         <div class="reg-form">
-            <form action="/before/register" method="POST" onsubmit="return checkSubmit()">
+            <form action="/before/updateMyselfInfo" method="POST" onsubmit="return checkSubmit()">
                 <div id="step2-wrap" style="display:block;">
                     <div id="loginName"  style="border: 1px solid #999;width: 100%;height: 54px;margin-bottom: 20px">
                         <label style="margin-left: 3%">用 户&nbsp; 名</label>
-                        <input id="userName" name="userName" onblur="registerVerify()" style="margin-left: 1%;border: 0px;width: 80%;height: 54px;margin-bottom: 20px"/>
-                        <i id="userInfo" style="position: absolute;margin-top: 10px;margin-left: 1%;color: green">用户名可以为中文，英文字母，数字及下划线组成，长度2-20位</i>
+                        <input id="userName" value="${user.userName}" readonly="readonly" name="userName" onblur="registerVerify()" style="margin-left: 1%;border: 0px;width: 80%;height: 54px;margin-bottom: 20px"/>
+                        <i id="userInfo" style="position: absolute;margin-top: 10px;margin-left: 1%;color: green"></i>
                     </div>
                     <div style="border: 1px solid #999;width: 100%;height: 54px;margin-bottom: 20px">
                         <label style="margin-left: 3%">密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码</label>
-                        <input type="password" id="password" onblur="passwordVerify()" style="margin-left: 1%;border: 0px;width: 80%;height: 54px;margin-bottom: 20px"/>
-                        <i id="passwordInfo" style="position: absolute;margin-top: 10px;margin-left: 1%;color: green">只能输入6-20个字母、数字、下划线</i>
-                    </div>
-                    <div style="border: 1px solid #999;width: 100%;height: 54px;margin-bottom: 20px">
-                        <label style="margin-left: 3%">确认密码</label>
-                        <input type="password" onblur="confirmRegister()" name="password" id="confirmPassword" style="margin-left: 1%;border: 0px;width: 80%;height: 54px;margin-bottom: 20px"/>
-                        <i id="newPasswordInfo" style="position: absolute;margin-top: 10px;margin-left: 1%"></i>
+                        <input value="${user.password}" name="password" type="password" id="password" onblur="passwordVerify()" style="margin-left: 1%;border: 0px;width: 80%;height: 54px;margin-bottom: 20px"/>
+                        <i id="passwordInfo" style="position: absolute;margin-top: 10px;margin-left: 1%;color: green"></i>
                     </div>
                     <div style="border: 1px solid #999;width: 100%;height: 54px;margin-bottom: 20px">
                         <label style="margin-left: 3%">手 机 &nbsp;号</label>
-                        <input id="phone" onblur="phoneVerify()" name="phone" style="margin-left: 1%;border: 0px;width: 80%;height: 54px;margin-bottom: 20px"/>
+                        <input value="${user.phone}" id="phone" onblur="phoneVerify()" name="phone" style="margin-left: 1%;border: 0px;width: 80%;height: 54px;margin-bottom: 20px"/>
                         <i id="phoneInfo" style="position: absolute;margin-top: 10px;margin-left: 1%"></i>
                     </div>
                     <div style="border: 1px solid #999;width: 100%;height: 54px;margin-bottom: 20px">
                         <label style="margin-left: 3%">邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;箱</label>
-                        <input id="email" onblur="emailVerify()" name="email" style="margin-left: 1%;border: 0px;width: 80%;height: 54px;margin-bottom: 20px"/>
+                        <input value="${user.email}" id="email" onblur="emailVerify()" name="email" style="margin-left: 1%;border: 0px;width: 80%;height: 54px;margin-bottom: 20px"/>
                         <i id="emailInfo" style="position: absolute;margin-top: 10px;margin-left: 1.5%"></i>
                     </div>
                     <div>
-                        <button class="btn-register" id="form-register" onclick="register()">立即注册
-                        </button>
+                        <button class="btn-register" id="form-register" onclick="register()">修改                      </button>
                     </div>
                     <div class="input-tip">
                         <span></span>
@@ -108,16 +80,30 @@
             </form>
         </div>
     </div>
-    <!-- widget reg-steps end -->
 </div>
-
-
-<!-- widget footer begin -->
-<!-- widget footer end -->
-
 <script type="text/javascript"
         src="//seq.jd.com/jseqf.html?bizId=JD_register_pc&amp;platform=js&amp;version=1"></script>
 <script src="//cdn.bootcss.com/json2/20150503/json2.js"></script>
+<script type="text/javascript" src="//misc.360buyimg.com/user/reg/3.0.0/js/common/jquery-1.11.1.js"></script>
+<script type="text/javascript" src="//misc.360buyimg.com/user/reg/3.0.0/js/personal/seajs-text.js"></script>
+<script type="text/javascript" src="//misc.360buyimg.com/user/reg/3.0.0/js/common/underscore-min.js"></script>
+<script type="text/javascript">
+    seajs.use('//misc.360buyimg.com/user/reg/3.0.0/js/personal/register-200204', function (reg) {
+        reg.init();
+    });
+</script>
+<script type="text/javascript" src="//misc.360buyimg.com/user/reg/3.0.0/widget/common/common.js"
+        source="widget"></script>
+<script src="//payrisk.jd.com/js/td.js"></script>
+<script src="https://gia.jd.com/y.html?v=0.05015829629434576&amp;o=reg.jd.com/p/regPage"></script>
+<script type="text/javascript">
+    $(function () {
+        getJdEid(function (eid, fpid) {
+            $("#eid").val(eid);
+            $("#sessionId").val(fpid);
+        });
+    });
+</script>
 <script type="text/javascript">
     (function () {
         var ja = document.createElement('script');
@@ -128,31 +114,6 @@
         s.parentNode.insertBefore(ja, s);
     })();
 
-    //用户名唯一性验证
-    function registerVerify() {
-        var userName = $("#userName").val();
-        var userVerify = userNameVerify(userName);
-        if(userVerify == false){
-            $("#userInfo").html("请输入正确的用户名格式").css({"color":"red"})
-            $("#userName").val('');
-        }else{
-            $.post("/before/registerVerify",{"userName":userName},function (data) {
-                var obj = JSON.parse(data);
-                if(obj.flag == 1){
-                    $("#userInfo").html("该用户名已被注册").css({"color":"red"})
-                    $("#userName").val('');
-                }else{
-                    $("#userInfo").html('');
-                }
-            })
-        }
-    }
-
-    //用户名校验（用户名可以为中文，英文字母，数字及下划线组成，长度2-20位）
-    function userNameVerify(str) {
-        var reg = /^[\u4E00-\u9FA5\uF900-\uFA2D|\w]{2,20}$/;
-        return reg.test(str);
-    }
 
     //邮箱正则验证
     function emailVerify() {
@@ -207,25 +168,13 @@
         var reg=/^\w+@[a-zA-Z0-9]{2,10}(?:\.[a-z]{2,4}){1,3}$/;
         return reg.test(str);
     }
-    
-    //两次密码输入是否一致验证
-    function confirmRegister() {
-        var password = $("#password").val();
-        var confirmPassword = $("#confirmPassword").val();
-        if(password != confirmPassword) {
-            $("#newPasswordInfo").html("两次密码输入不一致").css({"color": "red"})
-            $("#confirmPassword").val('');
-        }else{
-            $("#newPasswordInfo").html("");
-        }
-    }
-    
+
+
     function checkSubmit() {
         var userName= $("#userName").val();
         var password= $("#password").val();
         var phone= $("#phone").val();
         var email= $("#email").val();
-        var confirmPassword= $("#confirmPassword").val();
         if(userName == '') {
             $("#userInfo").html("用户名不能为空").css({"color": "red"});
             return false
@@ -233,11 +182,6 @@
         if(password == '') {
             $("#userInfo").html("")
             $("#passwordInfo").html("密码不能为空").css({"color": "red"});
-            return false
-        }
-        if(confirmPassword == '') {
-            $("#passwordInfo").html("")
-            $("#newPasswordInfo").html("确认密码不能为空").css({"color": "red"});
             return false
         }
         if(phone == '') {
@@ -251,8 +195,6 @@
             return false
         }
         $("#emailInfo").html("")
-        $("#tagTop").css({"color": "#33bb44"});
-        $("#tag").css({"color": "#33bb44"});
         return true
     }
 </script>

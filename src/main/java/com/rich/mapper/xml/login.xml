@@ -10,6 +10,19 @@
         </if>
     </select>
 
+    <insert id="insertEvaluate">
+        insert into evaluate_inner
+        (inner_remark,goods_id,user_id,create_time,update_time)
+        VALUES
+        (#{innerRemark}  ,#{goodsId} ,#{userId} ,#{createTime} ,#{updateTime} )
+    </insert>
+
+    <select id="selectEvaluate" resultType="com.rich.pojo.EvaluateInnerVO">
+        select e.*,s.user_name userName from evaluate_inner e
+        LEFT JOIN system_user s on s.id = e.user_id
+        where goods_id = #{goodsId}
+    </select>
+
     <select id="selectInfo" resultType="com.rich.pojo.SystemUser">
         select * from system_user
         where user_name = #{userName}
@@ -20,6 +33,36 @@
          (user_name,password,phone,email,create_time,update_time,role_id) VALUES
          (#{userName} ,#{password} ,#{phone} ,#{email} ,#{createTime} ,#{updateTime} ,#{roleId} )
     </insert>
+
+    <insert id="insertAddressInfo">
+        insert INTO address_info (userId, receivePhone, province, city, area, detailsAddress, isDefault, addressLabel, createAddressLabel) VALUES
+        (#{userId} ,#{receivePhone} ,#{province} ,#{city} ,#{area} ,#{detailsAddress} ,#{isDefault} ,#{addressLabel} ,#{createAddressLabel} )
+    </insert>
+
+    <update id="updateAddressInfo">
+        UPDATE address_info set receivePhone = #{receivePhone} ,province = #{province} ,city = #{city} ,area = #{area} ,detailsAddress = #{detailsAddress}
+         ,isDefault = #{isDefault} ,createAddressLabel = #{createAddressLabel},addressLabel = #{addressLabel}   where id  = #{id}
+    </update>
+
+    <update id="updateDefaultAddress">
+        UPDATE address_info set isDefault = 0 where userId = #{userId} and id != #{id}
+    </update>
+
+    <delete id="deleteAddressInfo">
+        DELETE from address_info where id = #{id}
+    </delete>
+
+    <select id="selectListAddress" resultType="com.rich.pojo.AddressInfo">
+        SELECT * from address_info where userId = #{id}
+    </select>
+
+    <select id="selectAddressInfo">
+        SELECT * from address_info where id = #{id}
+    </select>
+
+    <select id="selectAddressMyself" resultType="com.rich.pojo.AddressInfo">
+        select * from address_info where userId = #{userId} and isDefault = 1
+    </select>
 
     <update id="updatePasswordInfo">
         UPDATE system_user set password = #{password}
@@ -42,6 +85,11 @@
         select area from goods group by area
     </select>
 
+    <update id="updateMyself">
+        update system_user set password = #{password} ,phone = #{phone} ,email = #{email}
+        where user_name = #{userName}
+    </update>
+
     <insert id="insertBuyCar">
         insert into buy_car
         (num, goods_id, user_id, create_time, update_time)
@@ -55,8 +103,11 @@
     </select>
 
     <select id="selectOrderInfo" resultType="com.rich.vo.BuyCarInfo">
-        select b.order_id orderId,b.id id,g.name goodsName,g.img img,g.price price,b.num num from buy_car b
-        left join goods g on g.id =b.goods_id where b.user_id = #{userId} and order_id is not null
+        select g.id goodsId,ai.province,ai.city,ai.area,ai.detailsAddress,b.order_id orderId,b.id id,g.name goodsName,g.img img,g.price price,b.num num from buy_car b
+        left join goods g on g.id =b.goods_id
+        LEFT join order_info o on b.order_id = o.id
+        LEFT JOIN address_info ai on ai.id = o.address_info_id
+        where b.user_id = #{userId} and order_id is not null
     </select>
 
     <delete id="deleteBuyCar">

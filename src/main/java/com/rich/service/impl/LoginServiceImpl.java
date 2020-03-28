@@ -1,10 +1,7 @@
 package com.rich.service.impl;
 
 import com.rich.mapper.LoginMapper;
-import com.rich.pojo.BuyCar;
-import com.rich.pojo.Goods;
-import com.rich.pojo.OrderInfo;
-import com.rich.pojo.SystemUser;
+import com.rich.pojo.*;
 import com.rich.service.LoginService;
 import com.rich.vo.BuyCarInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +37,28 @@ public class LoginServiceImpl implements LoginService {
     }
 
     /***
+     * 添加评价
+     * @param evaluateInner
+     * @return
+     */
+    @Override
+    public int insertEvaluate(EvaluateInner evaluateInner) {
+        evaluateInner.setCreateTime(new Date());
+        evaluateInner.setUpdateTime(new Date());
+        return loginMapper.insertEvaluate(evaluateInner);
+    }
+
+    /***
+     * 查询商品的评价内容
+     * @param evaluateInner
+     * @return
+     */
+    @Override
+    public List<EvaluateInnerVO> selectListEvaluate(EvaluateInner evaluateInner) {
+        return loginMapper.selectEvaluate(evaluateInner);
+    }
+
+    /***
      * 新增用户
      * @param systemUser
      * @return
@@ -50,6 +69,52 @@ public class LoginServiceImpl implements LoginService {
         systemUser.setCreateTime(date);
         systemUser.setUpdateTime(date);
         return loginMapper.insertInfo(systemUser);
+    }
+
+    @Override
+    public int insertAddressInfo(AddressInfo addressInfo) {
+        if(addressInfo.getIsDefault() == 1){
+            loginMapper.updateDefaultAddress(addressInfo);
+        }
+        return loginMapper.insertAddressInfo(addressInfo);
+    }
+
+    @Override
+    public int updateAddressInfo(AddressInfo addressInfo) {
+        if(addressInfo.getIsDefault() == 1){
+            loginMapper.updateDefaultAddress(addressInfo);
+        }
+        return loginMapper.updateAddressInfo(addressInfo);
+    }
+
+    @Override
+    public int deleteAddressInfo(AddressInfo addressInfo) {
+        return loginMapper.deleteAddressInfo(addressInfo);
+    }
+
+    @Override
+    public List<AddressInfo> selectListAddressInfo(int id) {
+        return loginMapper.selectListAddress(id);
+    }
+
+    @Override
+    public AddressInfo selectAddressInfo(AddressInfo addressInfo) {
+        return loginMapper.selectAddressInfo(addressInfo);
+    }
+
+    @Override
+    public AddressInfo selectAddressMyselfInfo(AddressInfo addressInfo) {
+        return loginMapper.selectAddressMyself(addressInfo);
+    }
+
+    /***
+     * 修改个人信息
+     * @param systemUser
+     * @return
+     */
+    @Override
+    public int updateInfo(SystemUser systemUser) {
+        return loginMapper.updateMyself(systemUser);
     }
 
     /***
@@ -160,7 +225,7 @@ public class LoginServiceImpl implements LoginService {
         orderInfo.setOrderCode(code);
         int id = loginMapper.insertOrderInfo(orderInfo);
         for(BuyCarInfo vo : list){
-            vo.setOrderId(id);
+            vo.setOrderId(orderInfo.getId());
         }
         return loginMapper.updateBatchList(list);
     }

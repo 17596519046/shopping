@@ -82,7 +82,7 @@
                 <el-input type="password" v-model="ruleForm.password" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item label="邮箱" prop="email">
-                <el-input v-model.number="ruleForm.email"></el-input>
+                <el-input v-model="ruleForm.email"></el-input>
             </el-form-item>
             <el-form-item label="手机号" prop="phone">
                 <el-input v-model.number="ruleForm.phone"></el-input>

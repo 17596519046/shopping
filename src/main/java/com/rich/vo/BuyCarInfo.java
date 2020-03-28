@@ -34,4 +34,23 @@ public class BuyCarInfo {
      */
     private int orderId;
 
+    /**
+     *省
+     */
+    private String	province;
+    /**
+     *市
+     */
+    private String	city;
+    /**
+     *区
+     */
+    private String	area;
+    /**
+     *详情地址
+     */
+    private String	detailsAddress;
+
+
+
 }

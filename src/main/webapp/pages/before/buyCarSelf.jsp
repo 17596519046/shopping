@@ -141,6 +141,8 @@
                     </c:when>
                     <c:otherwise>
                         <a href="#" class="link-login">${user.userName}</a>
+                        &nbsp;&nbsp; <a href="#" onclick="myselfOrder()" class="link-login">我的订单</a>
+                        &nbsp;&nbsp; <a href="/pages/before/myselfAddress.jsp" class="link-login">收货地址</a>
                     </c:otherwise>
                 </c:choose>
                 <c:choose>
@@ -150,7 +152,6 @@
                         &nbsp;&nbsp; <a href="" onclick="loginOut()"  class="link-login">注销</a>
                     </c:otherwise>
                 </c:choose>
-                &nbsp;&nbsp; <a href="#" onclick="myselfOrder()" class="link-login">我的订单</a>
             </li>
         </ul>
     </div>
@@ -193,7 +194,26 @@
 <div class="cart-filter-bar">
     <ul class="switch-cart">
         <li class="switch-cart-item curr">
-            <a href="//cart.jd.com/cart.action">
+                <em style="color: black">收获地址:</em>
+                <em style="color: black">${address.province}
+                    ${address.city}
+                    ${address.area}
+                    ${address.detailsAddress}
+                </em>
+                <em style="color: black;margin-left: 20px">手机号:</em>
+                <em style="color: black;">${address.receivePhone}</em>
+                <%--<span class="number">1</span>--%>
+        </li>
+    </ul>
+    <div class="clr"></div>
+
+    <div class="tab-con ui-switchable-panel-selected" style="display: block;"></div>
+    <div class="tab-con hide" style="display: none;"></div>
+</div>
+<div class="cart-filter-bar">
+    <ul class="switch-cart">
+        <li class="switch-cart-item curr">
+            <a href="#">
                 <em>全部商品</em>
                 <%--<span class="number">1</span>--%>
             </a>
@@ -436,7 +456,7 @@
                                         <div class="normal">
                                             <div class="comm-right">
                                                 <div class="btn-area">
-                                                    <a onclick="settle()"
+                                                    <a onclick="settle('${address.id}')"
                                                        clstag="clickcart|keycount|xincart|cart_gotoOrder" class="submit-btn" data-bind="4">
                                                         去结算<b></b></a>
                                                 </div>
@@ -530,9 +550,13 @@
         var s = document.getElementsByTagName('script')[0];
         s.parentNode.insertBefore(ja, s);
     })();
-    function settle() {
+    function settle(id) {
+        if(id == ''){
+            alert('请选择收货地址');
+            return false
+        }
         var price = $("#account").html();
-        window.location.href = "/before/settle?price="+price;
+        window.location.href = "/before/settle?price="+price+"&addressInfoId="+id;
     }
 </script>
 <script src="//gias.jd.com/js/td.js"></script>

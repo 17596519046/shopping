@@ -1,11 +1,6 @@
 package com.rich.service;
-
-import com.rich.pojo.BuyCar;
-import com.rich.pojo.Goods;
-import com.rich.pojo.OrderInfo;
-import com.rich.pojo.SystemUser;
+import com.rich.pojo.*;
 import com.rich.vo.BuyCarInfo;
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
@@ -15,7 +10,25 @@ public interface LoginService {
 
     SystemUser selectInfo(SystemUser systemUser);
 
+    int insertEvaluate(EvaluateInner evaluateInner);
+
+    List<EvaluateInnerVO> selectListEvaluate(EvaluateInner evaluateInner);
+
     int insertInfo(SystemUser systemUser);
+
+    int insertAddressInfo(AddressInfo addressInfo);
+
+    int updateAddressInfo(AddressInfo addressInfo);
+
+    int deleteAddressInfo(AddressInfo addressInfo);
+
+    List<AddressInfo> selectListAddressInfo(int id);
+
+    AddressInfo selectAddressInfo(AddressInfo addressInfo);
+
+    AddressInfo selectAddressMyselfInfo(AddressInfo addressInfo);
+
+    int updateInfo(SystemUser systemUser);
 
     int updatePasswordInfo(SystemUser systemUser);
 

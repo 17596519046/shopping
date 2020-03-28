@@ -133,7 +133,9 @@
                     href="/pages/before/register.jsp" class="link-regist style-red">免费注册</a>
                 </c:when>
                 <c:otherwise>
-                    <a href="#" class="link-login">${user.userName}</a>
+                    <a href="/pages/before/mySelfInfo.jsp" class="link-login">${user.userName}</a>
+                    &nbsp;&nbsp; <a href="#" onclick="myselfOrder()" class="link-login">我的订单</a>
+                    &nbsp;&nbsp; <a href="/pages/before/myselfAddress.jsp" class="link-login">收货地址</a>
                 </c:otherwise>
             </c:choose>
             <c:choose>
@@ -143,7 +145,6 @@
                     &nbsp;&nbsp; <a href="" onclick="loginOut()"  class="link-login">注销</a>
                 </c:otherwise>
             </c:choose>
-            &nbsp;&nbsp; <a href="#" onclick="myselfOrder()" class="link-login">我的订单</a>
         </li>
     </ul>
 </div>

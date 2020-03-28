@@ -1,4 +1,12 @@
 <%@ page import="com.rich.pojo.SystemUser" %>
+<%@ page import="com.rich.service.LoginService" %>
+<%@ page import="com.rich.service.impl.LoginServiceImpl" %>
+<%@ page import="com.rich.pojo.EvaluateInner" %>
+<%@ page import="java.util.Date" %>
+<%@ page import="com.rich.pojo.EvaluateInnerVO" %>
+<%@ page import="java.util.List" %>
+<%@ page import="org.springframework.beans.factory.annotation.Autowired" %>
+<%@ page import="org.springframework.context.support.ClassPathXmlApplicationContext" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
@@ -7,9 +15,9 @@
     String img = request.getParameter("img");
     String price = request.getParameter("price");
     String id = request.getParameter("id");
-    SystemUser user= (SystemUser) request.getSession().getAttribute("user");
+    SystemUser user = (SystemUser) request.getSession().getAttribute("user");
     int userId = 0;
-    if(null != user){
+    if (null != user) {
         userId = user.getId();
     }
 %>
@@ -60,28 +68,30 @@
 <script>
     function search() {
         var key = $("#key").val();
-        window.location.href = '/before/main?name='+key;
+        window.location.href = '/before/main?name=' + key;
     }
 
     function mySelf() {
         var userId = $("#userId").val();
-        if(userId == 0){
+        if (userId == 0) {
             window.location.href = "/pages/before/login.jsp";
-        }else{
-            window.location.href = "/before/selectMySelfBuyCarInfo?userId="+userId
+        } else {
+            window.location.href = "/before/selectMySelfBuyCarInfo?userId=" + userId
         }
     }
+
     function myselfOrder() {
         var userId = $("#userId").val();
-        if(userId == 0){
+        if (userId == 0) {
             window.location.href = "/pages/before/login.jsp";
-        }else{
-            window.location.href = "/before/selectMySelfOrderInfo?userId="+userId
+        } else {
+            window.location.href = "/before/selectMySelfOrderInfo?userId=" + userId
         }
     }
+
     function clickArea(area) {
         var key = $("#key").val();
-        window.location.href = "/before/main?name="+key+"&area="+area;
+        window.location.href = "/before/main?name=" + key + "&area=" + area;
     }
 </script>
 <body>
@@ -106,7 +116,9 @@
                             <div class="ui-areamini-content-list">
                                 <c:forEach var="vo" items="${areaList}" varStatus="i">
                                     <div class="item"><a data-id="1" href="javascript:void(0)" role="menuitem"
-                                                         onclick="clickArea('${vo.area}')"    class="${vo.area eq area ?'selected':''}"    tabindex="-1">${vo.area}</a></div>
+                                                         onclick="clickArea('${vo.area}')"
+                                                         class="${vo.area eq area ?'selected':''}"
+                                                         tabindex="-1">${vo.area}</a></div>
                                 </c:forEach>
                             </div>
                         </div>
@@ -124,9 +136,10 @@
                     </c:when>
                     <c:otherwise>
                         <a href="#" class="link-login">${user.userName}</a>
+                        &nbsp;&nbsp; <a href="#" onclick="myselfOrder()" class="link-login">我的订单</a>
+                        &nbsp;&nbsp; <a href="/pages/before/myselfAddress.jsp" class="link-login">收货地址</a>
                     </c:otherwise>
                 </c:choose>
-                &nbsp;&nbsp; <a href="#" onclick="myselfOrder()" class="link-login">我的订单</a>
             </li>
         </ul>
     </div>
@@ -192,8 +205,8 @@
                     <%--</li>--%>
                     <%--</ul>--%>
                     <img id="spec-img"
-                         <%--data-origin="//img14.360buyimg.com/n1/jfs/t18325/65/199693094/405715/6f845190/5a61d111N0e4f0567.jpg"--%>
-                         <%--alt="卡罗莱（CALUOLA）全自动机械表男士手表运动男表防水多功能时尚学生真皮带精钢带夜光腕表 全黑钢带 CA1069【爆款有夜光】"--%>
+                    <%--data-origin="//img14.360buyimg.com/n1/jfs/t18325/65/199693094/405715/6f845190/5a61d111N0e4f0567.jpg"--%>
+                    <%--alt="卡罗莱（CALUOLA）全自动机械表男士手表运动男表防水多功能时尚学生真皮带精钢带夜光腕表 全黑钢带 CA1069【爆款有夜光】"--%>
                          src="<%=img%>"
                          width="350">
                     <%--<i></i>--%>
@@ -228,7 +241,7 @@
             </div>
         </div>
         <div class="itemInfo-wrap">
-            <input id="goodsId" type="hidden"  value="<%=id%>" >
+            <input id="goodsId" type="hidden" value="<%=id%>">
             <input id="userId" type="hidden" value="<%=userId%>">
             <div class="sku-name">
                 <%=name%>
@@ -236,14 +249,15 @@
             <div class="summary summary-first">
                 <div class="summary-price-wrap">
                     <div class="summary-price J-summary-price">
-                        <div class="dt">京 东 价</div>
+                        <div class="dt">豫 予 价</div>
                         <div class="dd">
-                            <span class="p-price"><span>￥</span><span class="price J-p-1048468099"><%=price%></span></span><span
+                            <span class="p-price"><span>￥</span><span
+                                    class="price J-p-1048468099"><%=price%></span></span><span
                                 class="pricing">
                             <%--[<del id="page_hx_price">￥2388.00</del>]--%>
                         </span>
                             <%--<a class="notice J-notify-sale" data-type="1" data-sku="1048468099" href="#none"--%>
-                               <%--clstag="shangpin|keycount|product|jiangjia_2">降价通知</a>--%>
+                            <%--clstag="shangpin|keycount|product|jiangjia_2">降价通知</a>--%>
                             <div class="fans-price J-fans-price hide" style="display: none;">
                                 <span class="p-price-fans">
                                     <span class="price J-p-f-1048468099"></span>
@@ -293,7 +307,8 @@
                         <div class="dd">
                             <dl>
                                 <dt class="fl"></dt>
-                                <dd class="lh"><a class="J-open-tb" href="#none"> <span class="quan-item" title="仅可购买卡罗莱旗舰店商品 有效期2020-03-09至2020-03-31">                                    <s></s><b></b>                                        <span
+                                <dd class="lh"><a class="J-open-tb" href="#none"> <span class="quan-item"
+                                                                                        title="仅可购买卡罗莱旗舰店商品 有效期2020-03-09至2020-03-31">                                    <s></s><b></b>                                        <span
                                         class="text">满1088减80</span>                                </span> <span
                                         class="quan-item" title="仅可购买卡罗莱旗舰店商品 有效期2020-03-09至2020-03-31">                                    <s></s><b></b>                                        <span
                                         class="text">满1688减100</span>                                </span> <span
@@ -315,17 +330,19 @@
                                    data-max="200">
                             <a class="btn-reduce" href="#none"
                                data-disabled="1" onclick="subtract()">-</a>
-                            <a onclick="add()" class="btn-add" onclick="setAmount.add('#buy-num')" href="#none" data-disabled="1">+</a>
+                            <a onclick="add()" class="btn-add" onclick="setAmount.add('#buy-num')" href="#none"
+                               data-disabled="1">+</a>
                         </div>
                         <script>
                             function subtract() {
                                 var number = $("#buy-num").val();
                                 var num = 1;
-                                if(number > 1){
+                                if (number > 1) {
                                     num = number - 1;
                                 }
                                 $("#buy-num").val(num);
                             }
+
                             function add() {
                                 var number = $("#buy-num").val();
                                 var num = parseInt(number) + parseInt(1);
@@ -336,7 +353,7 @@
                     <!--<a id="choose-btn-gift" class="btn-special1 btn-lg" style="display:none;" href="//cart.gift.jd.com/cart/addGiftToCart.action?pid=1048468099&pcount=1&ptype=1" class="btn-gift" clstag="shangpin|keycount|product|选作礼物购买_2"><b></b>选作礼物购买</a>-->
                     <a href="#"
                        class="btn-special1 btn-lg"
-                       onclick="addBuyCar()" >加入购物车</a>
+                       onclick="addBuyCar()">加入购物车</a>
                     <a id="btn-baitiao" class="btn-special2 btn-lg" style="display:none;"
                        onclick="log(&quot;product&quot;, &quot;dabaitiaobutton_5025_5026_13674&quot;, &quot;1048468099&quot;)">打白条</a>
                     <a href="//jc.jd.com" target="_blank" id="btn-jincai" class="btn-special2 btn-lg"
@@ -358,6 +375,26 @@
             </div>
         </div>
     </div>
+</div>
+<div class="m m-content comment" id="comment">
+    <div class="mt"><h3>商品评价</h3></div>
+    <c:forEach var="po" items="${list}" varStatus="i">
+    <div class="mt">
+        <div class="comment-item" data-guid="c8d19254-49a4-46f6-8a09-8e3695f50c20" data-top="">
+            <div class="user-column">
+                <div class="user-info"><img src="//misc.360buyimg.com/user/myjd-2015/css/i/peisong.jpg" alt="jd_933397364"
+                                            class="avatar" width="25" height="25">${po.userName}
+                </div>
+                <div class="user-level"><span style="color: rgb(136, 136, 136);"></span></div>
+            </div>
+            <div class="comment-column J-comment-column">
+                <div class="comment-star star5"></div>
+                <p class="comment-con" style="margin-left: 200px;">${po.innerRemark}
+                    </p>
+            </div>
+        </div>
+    </div>
+    </c:forEach>
 </div>
 <div id="J_footer" class="footer">
     <div class="mod_service" clstag="h|keycount|btm|btmnavi_null01">
@@ -404,10 +441,10 @@
         var goodsId = $("#goodsId").val();
         var userId = $("#userId").val();
         var num = $("#buy-num").val();
-        if(userId == 0){
+        if (userId == 0) {
             window.location.href = "/pages/before/login.jsp"
-        }else{
-            window.location.href = "/before/addBuyCar?goodsId="+goodsId+"&userId="+userId+"&num="+num;
+        } else {
+            window.location.href = "/before/addBuyCar?goodsId=" + goodsId + "&userId=" + userId + "&num=" + num;
         }
     }
 </script>

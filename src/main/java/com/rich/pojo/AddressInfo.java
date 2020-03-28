@@ -3,7 +3,7 @@ package com.rich.pojo;
 import lombok.Data;
 
 /**
-    * address_info 瀹炰綋绫籠r
+    * address_info
     * 2020-03-14 14:47:49
    */
 @Data

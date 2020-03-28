@@ -1,8 +1,5 @@
 package com.rich.controller;
-import com.rich.pojo.BuyCar;
-import com.rich.pojo.Goods;
-import com.rich.pojo.OrderInfo;
-import com.rich.pojo.SystemUser;
+import com.rich.pojo.*;
 import com.rich.service.LoginService;
 import com.rich.util.FastDFSClient;
 import com.rich.vo.BuyCarInfo;
@@ -72,8 +69,12 @@ public class LoginController {
     @RequestMapping("goodsDetail")
     public String goodsDetail(Goods goods,Model model) {
         List<Goods> areaList = loginService.selectAllArea();
+        EvaluateInner evaluateInner = new EvaluateInner();
+        evaluateInner.setGoodsId(goods.getId());
+        List<EvaluateInnerVO> list = loginService.selectListEvaluate(evaluateInner);
         model.addAttribute("areaList",areaList);
         model.addAttribute("po",goods);
+        model.addAttribute("list",list);
         return "pages/before/productDetails";
     }
 
@@ -112,6 +113,10 @@ public class LoginController {
         //计算购物车总金额
         String price = loginService.selectAllPrice(list);
         List<Goods> areaList = loginService.selectAllArea();
+        AddressInfo addressInfo=new AddressInfo();
+        addressInfo.setUserId(buyCar.getUserId());
+        AddressInfo record = loginService.selectAddressMyselfInfo(addressInfo);
+        model.addAttribute("address",record);
         model.addAttribute("areaList",areaList);
         model.addAttribute("list",list);
         model.addAttribute("price",price);
@@ -131,6 +136,10 @@ public class LoginController {
         //计算购物车总金额
         String price = loginService.selectAllPrice(list);
         List<Goods> areaList = loginService.selectAllArea();
+        AddressInfo addressInfo=new AddressInfo();
+        addressInfo.setUserId(buyCar.getUserId());
+        AddressInfo record = loginService.selectAddressMyselfInfo(addressInfo);
+        model.addAttribute("address",record);
         model.addAttribute("areaList",areaList);
         model.addAttribute("list",list);
         model.addAttribute("price",price);
@@ -205,12 +214,100 @@ public class LoginController {
     }
 
     /***
+     * 添加评价内容
+     * @param evaluateInner
+     * @return
+     */
+    @RequestMapping("insertEvaluate")
+    @ResponseBody
+    public Map insertEvaluate(EvaluateInner evaluateInner,HttpServletRequest request) {
+        SystemUser systemUser = (SystemUser) request.getSession().getAttribute("user");
+        evaluateInner.setUserId(systemUser.getId());
+        HashMap map = new HashMap();
+        int i = loginService.insertEvaluate(evaluateInner);
+        map.put("flag",i);
+        return map;
+    }
+
+    /***
+     * 新增地址信息
+     * @param addressInfo
+     * @return
+     */
+    @RequestMapping("insertAddress")
+    @ResponseBody
+    public Map insertAddress(@RequestBody AddressInfo addressInfo,HttpServletRequest request) {
+        SystemUser systemUser = (SystemUser) request.getSession().getAttribute("user");
+        addressInfo.setUserId(systemUser.getId());
+        HashMap map = new HashMap();
+        int i = loginService.insertAddressInfo(addressInfo);
+        map.put("flag",i);
+        return map;
+    }
+
+    /***
+     * 修改地址信息
+     * @param addressInfo
+     * @return
+     */
+    @RequestMapping("updateAddress")
+    @ResponseBody
+    public Map updateAddress(@RequestBody AddressInfo addressInfo,HttpServletRequest request) {
+        SystemUser systemUser = (SystemUser) request.getSession().getAttribute("user");
+        addressInfo.setUserId(systemUser.getId());
+        HashMap map = new HashMap();
+        int i = loginService.updateAddressInfo(addressInfo);
+        map.put("flag",i);
+        return map;
+    }
+
+    /***
+     * 删除地址信息
+     * @param addressInfo
+     * @return
+     */
+    @RequestMapping("deleteAddress")
+    @ResponseBody
+    public Map deleteAddress(@RequestBody AddressInfo addressInfo) {
+        HashMap map = new HashMap();
+        int i = loginService.deleteAddressInfo(addressInfo);
+        map.put("flag",i);
+        return map;
+    }
+
+    /***
+     * 查询地址信息列表
+     * @return
+     */
+    @RequestMapping("selectListAddress")
+    @ResponseBody
+    public Map selectListAddress(HttpServletRequest request) {
+        SystemUser systemUser = (SystemUser) request.getSession().getAttribute("user");
+        HashMap map = new HashMap();
+        List<AddressInfo> list = loginService.selectListAddressInfo(systemUser.getId());
+        map.put("data",list);
+        return map;
+    }
+
+    /***
+     * 修改个人信息
+     * @param systemUser
+     * @return
+     */
+    @RequestMapping("updateMyselfInfo")
+    public String updateMyselfInfo(SystemUser systemUser,HttpServletRequest request) {
+        loginService.updateInfo(systemUser);
+        request.getSession().removeAttribute("user");
+        return "pages/before/login";
+    }
+
+    /***
      * 修改密码
      * @param systemUser
      * @return
      */
     @RequestMapping("updatePasswordInfo")
-    public String updatePasswordInfo(Model model,SystemUser systemUser) {
+    public String updatePasswordInfo(SystemUser systemUser) {
         loginService.updatePasswordInfo(systemUser);
         return "pages/before/login";
     }
