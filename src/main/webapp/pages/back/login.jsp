@@ -1,10 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Title</title>
+  <title>后台管理</title>
   <script type="text/javascript" src="../../js/jquery-3.3.1.js"></script>
   <script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
   <script type="text/javascript" src="../../js/vue.js"></script>
@@ -32,9 +33,9 @@
 <body>
 <div id="app" style="height: 100%;width: 25%;">
   <label style="color:black;">帐号:</label>
-  <el-input style="width: 50%;margin:20px 0px;height: 100%" v-model="number" placeholder="帐号" ></el-input><br/>
+  <el-input style="width: 50%;margin:20px 0px;height: 100%" v-model="number" placeholder="帐号" value="1234567"></el-input><br/>
   <label style="color:black">密码:</label>
-  <el-input style="width: 50%;height: 100%" v-model="password" placeholder="密码"></el-input><br/>
+  <el-input style="width: 50%;height: 100%" v-model="password" show-password placeholder="密码"></el-input><br/>
   <el-button style="margin-top:20px;margin-bottom:40px;" type="success"  :disabled="disabled" @click="login" >登录</el-button>
 </div>
 <script type="text/javascript">

@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -48,7 +49,7 @@
                 </el-aside>
 
                 <el-main>
-                    <iframe name="right" scrolling="no" style="width:97%;height:650px;overflow: hidden" frameborder="0">
+                    <iframe name="right" scrolling="no" style="width:97%;height:800px;overflow: hidden" frameborder="0">
                     </iframe>
                 </el-main>
 

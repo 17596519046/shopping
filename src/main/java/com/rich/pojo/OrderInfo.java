@@ -2,6 +2,8 @@ package com.rich.pojo;
 
 import lombok.Data;
 
+import java.util.Date;
+
 /**
     * order_info 实体类
     * 2020-03-21 07:27:02
@@ -36,4 +38,9 @@ public class OrderInfo{
 	*订单金额
 	*/
 	private String	price;
+
+	/**
+	 * 下单时间
+	 */
+	private Date cretateTime;
 }
