@@ -24,7 +24,7 @@ public class BackController {
     BackService backService;
 
     /***
-     * 查看订单
+     * 跳到后台主页
      * @return
      */
     @RequestMapping("/index")

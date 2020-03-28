@@ -1,5 +1,10 @@
 package com.rich.mapper;
 
+import com.rich.vo.OrderInfoVO;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
 /**
  * 〈一句话功能简述〉<br>
  * 〈描述：mapper〉
@@ -8,5 +13,15 @@ package com.rich.mapper;
  * @create 2020/3/14
  * @since 1.0.0
  */
-public class OrderMapper {
+public interface OrderMapper {
+
+    List<OrderInfoVO> getAllOrder(int isAll);
+
+    void updateStatus(@Param("orderId") Integer orderId, @Param("orderStatus") Integer orderStatus);
+
+    List<OrderInfoVO> getAllOrder1();
+
+    OrderInfoVO getOneOrder(Integer orderId);
+
+    void updateGoodsNum(@Param("gsId") int gsId, @Param("num") Integer num);
 }

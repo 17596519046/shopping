@@ -1,6 +1,7 @@
 package com.rich.service;
 
 import com.rich.pojo.OrderInfo;
+import com.rich.vo.OrderInfoVO;
 
 import java.util.List;
 
@@ -14,6 +15,7 @@ import java.util.List;
  */
 public interface OrderService {
 
-    List<OrderInfo> selectAllOrder();
+    List<OrderInfoVO> getAllOrder(int isAll);
 
+    void updateStatus(Integer orderId, Integer orderStatus);
 }
