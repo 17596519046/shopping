@@ -89,7 +89,7 @@
             <el-form-item label="手机号" prop="phone">
                 <el-input v-model.number="ruleForm.phone"></el-input>
             </el-form-item>
-            <el-form-item label="手机号" prop="phone">
+            <el-form-item label="角色" prop="phone">
                 <el-select v-model="value" placeholder="角色">
                     <el-option
                             v-for="item in options"
