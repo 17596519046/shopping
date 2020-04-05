@@ -48,7 +48,7 @@
                 </el-aside>
 
                 <el-main>
-                    <iframe name="right" scrolling="no" style="width:97%;height:800px;overflow: hidden" frameborder="0">
+                    <iframe name="right" src="/back/user" scrolling="no" style="width:97%;height:800px;overflow: hidden" frameborder="0">
                     </iframe>
                 </el-main>
 
