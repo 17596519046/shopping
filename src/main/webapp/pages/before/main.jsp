@@ -142,7 +142,7 @@
                 <c:when test="${user.userName eq null}">
                 </c:when>
                 <c:otherwise>
-                    &nbsp;&nbsp; <a href="" onclick="loginOut()"  class="link-login">注销</a>
+                    &nbsp;&nbsp; <a href="/before/loginOut" class="link-login">注销</a>
                 </c:otherwise>
             </c:choose>
         </li>

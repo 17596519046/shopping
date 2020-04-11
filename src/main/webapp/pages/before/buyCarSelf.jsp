@@ -149,7 +149,7 @@
                     <c:when test="${user.userName eq null}">
                     </c:when>
                     <c:otherwise>
-                        &nbsp;&nbsp; <a href="" onclick="loginOut()"  class="link-login">注销</a>
+                        &nbsp;&nbsp; <a href="/before/loginOut" class="link-login">注销</a>
                     </c:otherwise>
                 </c:choose>
             </li>
@@ -556,7 +556,12 @@
             return false
         }
         var price = $("#account").html();
-        window.location.href = "/before/settle?price="+price+"&addressInfoId="+id;
+        if(parseInt(price) > 0 ){
+            window.location.href = "/before/settle?price="+price+"&addressInfoId="+id;
+        }else{
+            alert('请将商品加入购物车');
+            return false
+        }
     }
 </script>
 <script src="//gias.jd.com/js/td.js"></script>

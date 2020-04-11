@@ -19,6 +19,10 @@ public class OrderInfo{
 	*/
 	private int	goodsId;
 	/**
+	*用户id
+	*/
+	private int	userId;
+	/**
 	*数量
 	*/
 	private int	num;

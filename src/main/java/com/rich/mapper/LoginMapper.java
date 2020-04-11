@@ -1,7 +1,9 @@
 package com.rich.mapper;
 import com.rich.pojo.*;
 import com.rich.vo.BuyCarInfo;
+import com.rich.vo.OrderInfoDTO;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.core.annotation.Order;
 
 import java.util.List;
 
@@ -11,7 +13,7 @@ public interface LoginMapper {
 
     List<EvaluateInnerVO> selectEvaluate(EvaluateInner evaluateInner);
 
-    int cancelOrder(SystemUser systemUser);
+    int cancelOrder(OrderInfo orderInfo);
 
     int selectUserInfo(SystemUser systemUser);
 
@@ -45,7 +47,9 @@ public interface LoginMapper {
 
     List<BuyCarInfo> selectBuyCarInfo(BuyCar buyCar);
 
-    List<BuyCarInfo> selectOrderInfo(BuyCar buyCar);
+    List<BuyCarInfo> selectOrderDetails(BuyCar buyCar);
+
+    List<OrderInfoDTO> selectOrderInfo(BuyCar buyCar);
 
     List<OrderGoods> selectOrderGoodsInfo(OrderInfo orderInfo);
 

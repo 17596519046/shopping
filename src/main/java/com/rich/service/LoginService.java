@@ -1,6 +1,8 @@
 package com.rich.service;
 import com.rich.pojo.*;
 import com.rich.vo.BuyCarInfo;
+import com.rich.vo.OrderInfoDTO;
+
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
@@ -14,7 +16,7 @@ public interface LoginService {
 
     List<EvaluateInnerVO> selectListEvaluate(EvaluateInner evaluateInner);
 
-    int cancelOrder(SystemUser systemUser);
+    int cancelOrder(OrderInfo orderInfo);
 
     int insertInfo(SystemUser systemUser);
 
@@ -44,7 +46,9 @@ public interface LoginService {
 
     List<OrderGoods> selectOrderGoods(OrderInfo orderInfo);
 
-    List<BuyCarInfo> selectOrderInfo(BuyCar buyCar);
+    List<BuyCarInfo> selectOrderDetails(BuyCar buyCar);
+
+    List<OrderInfoDTO> selectOrderInfo(BuyCar buyCar);
 
     String selectAllPrice(List<BuyCarInfo> list);
 

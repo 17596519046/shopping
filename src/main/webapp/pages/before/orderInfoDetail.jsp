@@ -93,6 +93,11 @@
         }
     }
 
+    function loginOut() {
+        $.post('/before/loginOut', {}, function () {
+            window.location.href = "/before/main";
+        })
+    }
 
     function clickArea(area) {
         var key = $("#key").val();
@@ -144,7 +149,7 @@
                     </c:when>
                     <c:otherwise>
                         <a href="#" class="link-login">${user.userName}</a>
-                        <%--&nbsp;&nbsp; <a href="#" onclick="myselfOrder()" class="link-login">我的订单</a>--%>
+                        &nbsp;&nbsp; <a href="#" onclick="myselfOrder()" class="link-login">我的订单</a>
                         &nbsp;&nbsp; <a href="/pages/before/myselfAddress.jsp" class="link-login">收货地址</a>
                     </c:otherwise>
                 </c:choose>
@@ -214,7 +219,7 @@
     <ul class="switch-cart">
         <li class="switch-cart-item curr">
             <a href="#">
-                <em>我的订单</em>
+                <em>订单详情</em>
                 <%--<span class="number">1</span>--%>
             </a>
         </li>
@@ -222,11 +227,9 @@
     </ul>
     <%--<button onclick="cancelOrder()" style="background-color: white;margin-left:88%;position: absolute;color: black;width: 60px;height: 30px;border-radius: 5px"> 取消订单</button>--%>
     <%--<script>--%>
-        <%--function cancelOrder(id) {--%>
-            <%----%>
-            <%--$.post('/before/cancelOrder',{id:id},function (data) {--%>
-                <%--var userId = $("#userId").val();--%>
-                <%--window.location.href = 'selectMySelfOrderInfo?userId='+userId;--%>
+        <%--function cancelOrder(id,goodsId) {--%>
+            <%--$.post('/before/cancelOrder',{},function (data) {--%>
+                <%--window.location.href = 'selectMySelfOrderInfo';--%>
             <%--})--%>
         <%--}--%>
     <%--</script>--%>
@@ -240,13 +243,12 @@
 <div id="jd-cart">
     <div class="cart-main cart-main-new">
         <div class="cart-thead">
-            <div class="column t-goods"></div>
-            <div class="column t-props" style="margin-left: 5%">订单编号</div>
-            <div class="column t-price">金额</div>
-            <div class="column t-quantity" style="margin-left: 5%">订单状态</div>
-            <div class="column t-sum"></div>
-            <div class="column t-action" style="margin-left: 8%;width: 400px">收货地址</div>
-            <div class="column t-action">操作</div>
+            <div class="column t-goods" style="text-align: center">商品</div>
+            <div class="column t-props"></div>
+            <div class="column t-price">单价</div>
+            <div class="column t-quantity" style="width: 30%;text-align: center" >数量</div>
+            <div class="column t-sum">小计</div>
+            <div class="column t-sum">操作</div>
         </div>
         <div id="cart-list"><input type="hidden" id="allSkuIds" value="57730305717">
             <!-- 需要引用的全局信息 -->
@@ -261,17 +263,18 @@
                                  cancelplus="false"
                                  dt="5" shopid="688677">
                                 <div class="item-form">
-                                    <div class="cell p-goods" style="width: 22%">
+                                    <div class="cell p-goods">
                                         <div class="goods-item">
-                                            <a href="/before/selectMyselfOrderInfoDetail?orderId=${po.orderId}" style="cursor: pointer;color:#ed3800">${po.orderCode}</a>
-                                                <%--<div class="p-img">--%>
-                                                <%----%>
-                                                <%--</div>--%>
+                                            <div class="p-img">
+                                                <img alt="" width="80" style="height:80px;"
+                                                     clstag="clickcart|keycount|xincart|cart_sku_pic"
+                                                     src="${po.img}">
+                                            </div>
                                             <div class="item-msg">
                                                 <div class="p-name">
                                                     <a clstag="clickcart|keycount|xincart|cart_sku_name"
                                                        href="#">
-
+                                                            ${po.goodsName}
                                                     </a>
                                                 </div>
                                                 <div class="p-extend p-extend-new">
@@ -285,10 +288,9 @@
                                         <%--<div class="cell p-props p-props-new">--%>
                                         <%--<div class="props-txt" title="筋膜枪">筋膜枪</div>--%>
                                         <%--</div>--%>
-                                    <div class="cell p-price p-price-new" style="text-align: left;padding-right: 0px">
-                                            ${po.price}
-                                        <p class="plus-switch" >
-                                            <strong id="money"></strong>
+                                    <div class="cell p-price p-price-new" style="width: 12%">
+                                        <p class="plus-switch">
+                                            <strong id="${po.id}money">${po.price}</strong>
                                         </p>
                                         <div>
                                             <div class="clr"></div>
@@ -297,88 +299,68 @@
                                         </p>
                                         <p class="mt5" bt=""></p>
                                     </div>
-                                    <div class="cell p-price p-price-new" style="text-align: left;width: 100px">
-                                        <c:choose>
-                                            <c:when test="${po.orderStatus == 1}">
-                                                已下单
-                                            </c:when>
-                                            <c:when test="${po.orderStatus == 2}">
-                                                取消订单
-                                            </c:when>
-                                            <c:when test="${po.orderStatus == 3}">
-                                                管理取消
-                                            </c:when>
-                                            <c:when test="${po.orderStatus == 4}">
-                                                已发货
-                                            </c:when>
-                                            <c:when test="${po.orderStatus == 5}">
-                                                已接收
-                                            </c:when>
-                                            <c:otherwise>
-                                                派送中
-                                            </c:otherwise>
-                                        </c:choose>
-                                    </div>
-                                    <div class="cell p-ops" style="width: 400px">
+                                    <div class="cell p-quantity" style="width: 30%">
                                         <!--单品-->
-                                        <a id="remove_692560_57730305717_1"
-                                           clstag="clickcart|keycount|xincart|cart_sku_del"
-                                           data-name="安步（ANBU）轻羽筋膜枪按摩枪 蜜蜂静音大..." data-more="removed_299.00_1"
-                                           class="cart-remove" ob="false">
-                                                ${po.province}
-                                                ${po.city}
-                                                ${po.area}
-                                                ${po.detailsAddress}
-
-                                        </a>
-                                            <%--<a href="javascript:void(0);" class="cart-follow" id="follow_692560_57730305717_1" clstag="clickcart|keycount|xincart|cart_sku_guanzhu" ob="false">移到我的关注</a>--%>
-                                    </div>
-
-                                        <div class="cell p-ops" style="margin-left: 2%">
-                                            <!--单品-->
-
-                                            <a
-                                                    onclick="cancelOrder('${po.orderId}','${po.orderStatus}')"
-                                                    style="cursor:pointer" id="remove_692560_57730305717_1"
-                                                    clstag="clickcart|keycount|xincart|cart_sku_del"
-                                                    data-name="安步（ANBU）轻羽筋膜枪按摩枪 蜜蜂静音大..." data-more="removed_299.00_1"
-                                                    class="cart-remove" ob="false">
-                                                <c:choose>
-                                                <c:when test="${po.orderStatus != 2}">
-                                                取消订单
-                                                </c:when>
-                                                <c:otherwise>
-                                                </c:otherwise>
-                                                </c:choose>
-                                            </a>
-                                                <%--<a href="javascript:void(0);" class="cart-follow" id="follow_692560_57730305717_1" clstag="clickcart|keycount|xincart|cart_sku_guanzhu" ob="false">移到我的关注</a>--%>
+                                        <div class="quantity-form" style="width: 60%">
+                                                <%--<a onclick="subtract('${po.id}')"--%>
+                                                <%--class="decrement disabled">-</a>--%>
+                                            <input style="position: absolute;margin-left: 73%" readonly="readonly" autocomplete="off" type="text" class="itxt"
+                                                   value="${po.num}"
+                                                   id="${po.id}number" minnum="1">
+                                                <%--<a  onclick="add('${po.id}')"--%>
+                                                <%--class="increment">+</a>--%>
                                         </div>
-                                    <script>
-                                        function cancelOrder(id) {
-                                            $.post('/before/cancelOrder',{id:id},function (data) {
-                                                var userId = $("#userId").val();
-                                                window.location.href = 'selectMySelfOrderInfo?userId='+userId;
-                                            })
-                                        }
-                                    </script>
+                                    </div>
+                                    <div class="cell p-sum" style="padding-left: 2%;padding-right: 0px">
+                                        <strong id="${po.id}prices"><fmt:formatNumber type="number"
+                                                                                      value="${po.num*po.price}"
+                                                                                      pattern="0.00"
+                                                                                      maxFractionDigits="2"></fmt:formatNumber></strong>
+                                    </div>
+                                        <%--<div class="cell p-ops" style="width: 400px">--%>
+                                        <%--<!--单品-->--%>
+                                        <%--<a id="remove_692560_57730305717_1"--%>
+                                        <%--clstag="clickcart|keycount|xincart|cart_sku_del"--%>
+                                        <%--data-name="安步（ANBU）轻羽筋膜枪按摩枪 蜜蜂静音大..." data-more="removed_299.00_1"--%>
+                                        <%--class="cart-remove" ob="false">--%>
+                                        <%--${po.province}--%>
+                                        <%--${po.city}--%>
+                                        <%--${po.area}--%>
+                                        <%--${po.detailsAddress}--%>
+
+                                        <%--</a>--%>
+                                        <%--&lt;%&ndash;<a href="javascript:void(0);" class="cart-follow" id="follow_692560_57730305717_1" clstag="clickcart|keycount|xincart|cart_sku_guanzhu" ob="false">移到我的关注</a>&ndash;%&gt;--%>
+                                        <%--</div>--%>
+                                        <div class="cell p-ops" style="width: 18%;text-align: center">
+                                        <!--单品-->
+                                        <a
+                                        onclick="evaluateGoods('${po.id}')"
+                                        style="cursor:pointer" id="remove_692560_57730305717_1"
+                                        clstag="clickcart|keycount|xincart|cart_sku_del"
+                                        data-name="安步（ANBU）轻羽筋膜枪按摩枪 蜜蜂静音大..." data-more="removed_299.00_1"
+                                        class="cart-remove" ob="false">
+                                        发表评价
+                                        </a>
+                                        <%--<a href="javascript:void(0);" class="cart-follow" id="follow_692560_57730305717_1" clstag="clickcart|keycount|xincart|cart_sku_guanzhu" ob="false">移到我的关注</a>--%>
+                                        </div>
                                 </div>
-                                    <%--<script>--%>
-                                    <%--function evaluateGoods(id) {--%>
-                                    <%--var inner = "#"+id+"inner";--%>
-                                    <%--$(inner).val('');--%>
-                                    <%--var eval = "#"+id+"evaluate";--%>
-                                    <%--$(eval).show();--%>
-                                    <%--}--%>
-                                    <%--function commit(id,goodsId) {--%>
-                                    <%--var eval = "#"+id+"evaluate";--%>
-                                    <%--var inner = "#"+id+"inner";--%>
-                                    <%--var inners = $(inner).val();--%>
-                                    <%--$.post('/before/insertEvaluate',{"innerRemark":inners,"goodsId":goodsId},function (data) {--%>
-                                    <%--alert('评价成功')--%>
-                                    <%--$(eval).hide()--%>
-                                    <%--})--%>
-                                    <%--}--%>
-                                    <%--</script>--%>
+                                    <script>
+                                    function evaluateGoods(id) {
+                                    var inner = "#"+id+"inner";
+                                    $(inner).val('');
+                                    var eval = "#"+id+"evaluate";
+                                    $(eval).show();
+                                    }
+                                    function commit(id,goodsId) {
+                                    var eval = "#"+id+"evaluate";
+                                    var inner = "#"+id+"inner";
+                                    var inners = $(inner).val();
+                                    $.post('/before/insertEvaluate',{"innerRemark":inners,"goodsId":goodsId},function (data) {
+                                    alert('评价成功')
+                                    $(eval).hide()
+                                    })
+                                    }
+                                    </script>
                                 <div class="item-extra mb10">
 
 
@@ -386,10 +368,10 @@
                                     </div>
                                     <!-- 落地配服务 -->
                                 </div>
-                                    <%--<div id="${po.id}evaluate" class="comment-column J-comment-column" style="margin-bottom: 1%;display: none">--%>
-                                    <%--<textarea id="${po.id}inner" style="width: 83%"></textarea>--%>
-                                    <%--<button onclick="commit('${po.id}','${po.goodsId}')" style="background-color: #019320;color: white;width: 60px;height: 30px;position: absolute;margin-left: 20px;margin-top:10px;border-radius: 5px">提交</button>--%>
-                                    <%--</div>--%>
+                                    <div id="${po.id}evaluate" class="comment-column J-comment-column" style="margin-bottom: 1%;display: none">
+                                    <textarea id="${po.id}inner" placeholder="请输入评价内容" style="width: 83%"></textarea>
+                                    <button onclick="commit('${po.id}','${po.goodsId}')" style="background-color: #019320;color: white;width: 60px;height: 30px;position: absolute;margin-left: 20px;margin-top:10px;border-radius: 5px">提交</button>
+                                    </div>
                                 <div class="item-line"></div>
                             </div>
                         </c:forEach>

@@ -8,6 +8,7 @@
   <title>后台管理</title>
   <script type="text/javascript" src="../../js/jquery-3.3.1.js"></script>
   <script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
+  <script type="text/javascript" src="/js/supersized-init.js"></script>
   <script type="text/javascript" src="../../js/vue.js"></script>
   <!-- 引入样式 -->
   <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
@@ -18,7 +19,7 @@
 </head>
 <style>
   body{
-    background: url("../../img/image/1.jpg.jpg") no-repeat center center fixed ;
+    background: url("../../img/image/backLogin.jpg") no-repeat center center fixed ;
     background-size:cover;
     text-align:center;
     padding: 10px;
@@ -31,7 +32,7 @@
   }
 </style>
 <body>
-<div id="app" style="height: 100%;width: 25%;">
+<div id="app" style="height: 100%;width: 25%">
   <label style="color:black;">帐号:</label>
   <el-input style="width: 50%;margin:20px 0px;height: 100%" v-model="number" placeholder="帐号" value="1234567"></el-input><br/>
   <label style="color:black">密码:</label>

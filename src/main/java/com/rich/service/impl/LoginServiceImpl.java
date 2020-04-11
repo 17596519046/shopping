@@ -4,6 +4,7 @@ import com.rich.mapper.LoginMapper;
 import com.rich.pojo.*;
 import com.rich.service.LoginService;
 import com.rich.vo.BuyCarInfo;
+import com.rich.vo.OrderInfoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -60,12 +61,12 @@ public class LoginServiceImpl implements LoginService {
 
     /***
      * 取消订单
-     * @param systemUser
+     * @param orderInfo
      * @return
      */
     @Override
-    public int cancelOrder(SystemUser systemUser) {
-        return loginMapper.cancelOrder(systemUser);
+    public int cancelOrder(OrderInfo orderInfo) {
+        return loginMapper.cancelOrder(orderInfo);
     }
 
     /***
@@ -186,7 +187,12 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
-    public List<BuyCarInfo> selectOrderInfo(BuyCar buyCar) {
+    public List<BuyCarInfo> selectOrderDetails(BuyCar buyCar) {
+        return loginMapper.selectOrderDetails(buyCar);
+    }
+
+    @Override
+    public List<OrderInfoDTO> selectOrderInfo(BuyCar buyCar) {
         return loginMapper.selectOrderInfo(buyCar);
     }
 
@@ -237,12 +243,16 @@ public class LoginServiceImpl implements LoginService {
         BuyCar buyCar = new BuyCar();
         buyCar.setUserId(systemUser.getId());
         List<BuyCarInfo> list = loginMapper.selectBuyCarInfo(buyCar);
-        orderInfo.setOrderStatus(1);
-        orderInfo.setOrderCode(code);
-        int id = loginMapper.insertOrderInfo(orderInfo);
-        for(BuyCarInfo vo : list){
-            vo.setOrderId(orderInfo.getId());
+        int i= 0;
+        if(list.size() > 0){
+            orderInfo.setOrderStatus(1);
+            orderInfo.setOrderCode(code);
+            int id = loginMapper.insertOrderInfo(orderInfo);
+            for(BuyCarInfo vo : list){
+                vo.setOrderId(orderInfo.getId());
+            }
+            i = loginMapper.updateBatchList(list);
         }
-        return loginMapper.updateBatchList(list);
+        return i;
     }
 }

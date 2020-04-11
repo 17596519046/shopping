@@ -352,7 +352,7 @@
                             function add() {
                                 var number = $("#buy-num").val();
                                 var goodsNum = $("#goodsNum").val();
-                                if(number >= goodsNum){
+                                if(number > goodsNum){
                                     alert('该商品库存不足');
                                     return false
                                 }

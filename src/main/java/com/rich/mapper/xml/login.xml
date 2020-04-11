@@ -24,10 +24,9 @@
     </select>
 
     <update id="cancelOrder">
-        	update buy_car b
-    left join
-        order_info o
-            on b.order_id = o.id set o.orderStatus = 2 where b.user_id = #{id}
+        	update order_info
+            set orderStatus = 2
+            where id = #{id}
     </update>
 
     <select id="selectInfo" resultType="com.rich.pojo.SystemUser">
@@ -109,12 +108,18 @@
         left join goods g on g.id =b.goods_id where b.user_id = #{userId} and order_id is null
     </select>
 
-    <select id="selectOrderInfo" resultType="com.rich.vo.BuyCarInfo">
-        select g.id goodsId,ai.province,ai.city,ai.area,ai.detailsAddress,b.order_id orderId,b.id id,g.name goodsName,g.img img,g.price price,b.num num from buy_car b
+    <select id="selectOrderDetails" resultType="com.rich.vo.BuyCarInfo">
+        select g.id goodsId,b.order_id orderId,b.id id,g.name goodsName,g.img img,g.price price,b.num num from buy_car b
         left join goods g on g.id =b.goods_id
-        LEFT join order_info o on b.order_id = o.id
-        LEFT JOIN address_info ai on ai.id = o.address_info_id
-        where b.user_id = #{userId} and order_id is not null and o.orderStatus != 2
+        where b.order_id = #{orderId}
+    </select>
+
+    <select id="selectOrderInfo" resultType="com.rich.vo.OrderInfoDTO">
+       select a.detailsAddress detailsAddress,a.province,a.city,a.area area,
+       o.id orderId,o.orderCode orderCode,o.price price,o.orderStatus
+       from order_info o
+        left join address_info a on a.id = o.address_info_id
+         where o.userId = #{userId}
     </select>
 
     <select id="selectOrderGoodsInfo" resultType="com.rich.pojo.OrderGoods">
@@ -130,9 +135,9 @@
 
     <insert id="insertOrderInfo" useGeneratedKeys="true" keyProperty="id">
         insert into order_info
-        (goods_id, num, address_info_id, orderCode, orderStatus, price)
+        (goods_id, num, address_info_id, orderCode, orderStatus, price,userId)
         VALUES
-        (#{goodsId} ,#{num} ,#{addressInfoId}  ,#{orderCode} ,#{orderStatus} ,#{price}  )
+        (#{goodsId} ,#{num} ,#{addressInfoId}  ,#{orderCode} ,#{orderStatus} ,#{price} ,#{userId}  )
 
     </insert>
 

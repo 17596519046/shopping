@@ -3,6 +3,7 @@ import com.rich.pojo.*;
 import com.rich.service.LoginService;
 import com.rich.util.FastDFSClient;
 import com.rich.vo.BuyCarInfo;
+import com.rich.vo.OrderInfoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -87,16 +88,30 @@ public class LoginController {
     @RequestMapping("settle")
     public String settle(OrderInfo orderInfo, Model model,HttpServletRequest request) {
         SystemUser systemUser = (SystemUser) request.getSession().getAttribute("user");
+        orderInfo.setUserId(systemUser.getId());
         int i = loginService.settleOrderInfo(orderInfo,request);
         //查询订单列表信息
         BuyCar record = new BuyCar();
         record.setUserId(systemUser.getId());
-        List<BuyCarInfo> list = loginService.selectOrderInfo(record);
+        List<OrderInfoDTO> list = loginService.selectOrderInfo(record);
         List<Goods> areaList = loginService.selectAllArea();
         model.addAttribute("areaList",areaList);
         //计算购物车总金额
         model.addAttribute("list",list);
         return "pages/before/buyOrderSelf";
+    }
+
+    /***
+     * 查看订单详情
+     * @param buyCar
+     * @param model
+     * @return
+     */
+    @RequestMapping("selectMyselfOrderInfoDetail")
+    public String selectMyselfOrderInfoDetail(BuyCar buyCar, Model model,HttpServletRequest request) {
+        List<BuyCarInfo> list = loginService.selectOrderDetails(buyCar);
+        model.addAttribute("list",list);
+        return "pages/before/orderInfoDetail";
     }
 
     /***
@@ -147,7 +162,7 @@ public class LoginController {
     }
 
     /***
-     * 查看订单详情
+     * 查看订单
      * @param buyCar
      * @param model
      * @return
@@ -155,7 +170,7 @@ public class LoginController {
     @RequestMapping("selectMySelfOrderInfo")
     public String selectMySelfOrderInfo(BuyCar buyCar, Model model) {
         //查询购物车列表信息
-        List<BuyCarInfo> list = loginService.selectOrderInfo(buyCar);
+        List<OrderInfoDTO> list = loginService.selectOrderInfo(buyCar);
         List<Goods> areaList = loginService.selectAllArea();
         model.addAttribute("areaList",areaList);
         model.addAttribute("list",list);
@@ -215,13 +230,13 @@ public class LoginController {
 
     /***
      * 取消订单
-     * @param systemUser
+     * @param orderInfo
      * @return
      */
     @RequestMapping("cancelOrder")
     @ResponseBody
-    public String cancelOrder(Model model,SystemUser systemUser) {
-        loginService.cancelOrder(systemUser);
+    public String cancelOrder(Model model,OrderInfo orderInfo) {
+        loginService.cancelOrder(orderInfo);
         return "";
     }
 
@@ -342,10 +357,9 @@ public class LoginController {
      * @return
      */
     @RequestMapping("loginOut")
-    @ResponseBody
     public String updatePasswordInfo(HttpServletRequest request) {
         request.getSession().removeAttribute("user");
-        return "";
+        return "pages/before/login";
     }
 
     /***
